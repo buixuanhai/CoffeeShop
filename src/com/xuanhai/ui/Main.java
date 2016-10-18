@@ -8,6 +8,7 @@ package com.xuanhai.ui;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.viewmodels.CategoryListModel;
+import com.xuanhai.viewmodels.ProductTableModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,6 +34,7 @@ public class Main extends javax.swing.JFrame {
 
     private void initTables() {
         initCategoryListBox();
+        initProductTable();
     }
 
     private void initCategoryListBox() {
@@ -1055,4 +1057,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton updateTableNumberButton;
     private javax.swing.JRadioButton weekRadio;
     // End of variables declaration//GEN-END:variables
+
+    private void initProductTable() {
+        foodAndBeverageTable.setModel(new ProductTableModel());
+    }
 }

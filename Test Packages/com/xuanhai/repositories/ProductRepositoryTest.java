@@ -63,7 +63,7 @@ public class ProductRepositoryTest {
     @Test
     public void testGetAll() {
         ProductRepository instance = new ProductRepository();
-        List<SanPham> result = instance.Get();
+        List<SanPham> result = instance.get();
         assertNotNull(result);
     }
 
@@ -132,7 +132,7 @@ public class ProductRepositoryTest {
     public void testDelete() {
         // Arrange
         ProductRepository instance = new ProductRepository();
-        List<SanPham> spList = instance.Get();
+        List<SanPham> spList = instance.get();
         SanPham spToDelete = spList.get(spList.size() - 1);
         int spToDeleteId = spToDelete.getSanPhamId();
 

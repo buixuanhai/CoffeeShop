@@ -24,7 +24,7 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public List<SanPham> Get() {
+    public List<SanPham> get() {
 
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();

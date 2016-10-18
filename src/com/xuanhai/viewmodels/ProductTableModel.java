@@ -6,8 +6,11 @@
 package com.xuanhai.viewmodels;
 
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.ProductRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -16,30 +19,40 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProductTableModel extends AbstractTableModel {
 
-    private CategoryRepository repo;
-    private List<LoaiSanPham> data;
+    private ProductRepository repo;
+    private List<SanPham> data;
+    private List<Object[]> model;
+    private String[] columnNames = { "ID", "Tên sản phẩm", "Đơn giá",
+        "Số lượng" };
 
     public ProductTableModel() {
-        repo = new CategoryRepository();
+        repo = new ProductRepository();
         this.data = repo.get();
 
-        
-        
+        model = data.stream().map(d -> new Object[]{d.getSanPhamId(), d.getTenSanPham(), d.getDonGia(), d.getSoLuong()}).collect(Collectors.toList());
+
     }
 
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return model.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 4;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return model.get(rowIndex)[columnIndex];
     }
+
+    @Override
+    public String getColumnName(int column) {
+        return columnNames[column];
+    }
+    
+    
 
 }

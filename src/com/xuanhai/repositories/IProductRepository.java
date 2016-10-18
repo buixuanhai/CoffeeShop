@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IProductRepository {
 
-    List<SanPham> Get();
+    List<SanPham> get();
 
     SanPham get(int id);
     
