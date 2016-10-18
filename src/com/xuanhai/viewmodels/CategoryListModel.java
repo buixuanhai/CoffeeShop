@@ -23,7 +23,7 @@ public class CategoryListModel extends DefaultListModel {
         this.tenLoaiSanPham = new ArrayList<>();
         this.repo = new CategoryRepository();
         this.data = repo.get();
-        
+
         tenLoaiSanPham = data.stream().map(LoaiSanPham::getTenLoaiSanPham).collect(Collectors.toList());
     }
 

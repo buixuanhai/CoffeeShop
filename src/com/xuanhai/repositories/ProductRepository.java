@@ -7,6 +7,8 @@ package com.xuanhai.repositories;
 
 import com.xuanhai.models.SanPham;
 import com.xuanhai.util.HibernateUtil;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -32,7 +34,7 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public SanPham Get(int id) {
+    public SanPham get(int id) {
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
 
@@ -56,14 +58,13 @@ public class ProductRepository implements IProductRepository {
             s.beginTransaction();
             int id = (int) s.save(sanPham);
             s.getTransaction().commit();
-//            HibernateUtil.getSessionFactory().close();
             return id;
         }
     }
 
     @Override
     public int delete(int sanPhamId) {
-        SanPham sp = this.Get(sanPhamId);
+        SanPham sp = this.get(sanPhamId);
         if (sp == null) {
             return -1;
         } else {
@@ -82,12 +83,20 @@ public class ProductRepository implements IProductRepository {
             s.beginTransaction();
             s.update(sanPham);
             s.getTransaction().commit();
-            
+
             return sanPham.getSanPhamId();
         } catch (HibernateException e) {
             return -1;
         }
 
+    }
+
+    @Override
+    public List<SanPham> getByCategory(int id) {
+        CategoryRepository repo = new CategoryRepository();
+
+        return new ArrayList<>(repo.get(id).getSanPhams());
+        
     }
 
 }

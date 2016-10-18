@@ -16,7 +16,9 @@ public interface IProductRepository {
 
     List<SanPham> Get();
 
-    SanPham Get(int id);
+    SanPham get(int id);
+    
+    List<SanPham> getByCategory(int id);
 
     int create(SanPham sanPham);
 

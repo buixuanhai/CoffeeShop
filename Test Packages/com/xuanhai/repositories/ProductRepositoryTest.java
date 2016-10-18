@@ -54,11 +54,11 @@ public class ProductRepositoryTest {
         int id = instance.create(sanPham);
 
         // Assert
-        assertEquals(tenSanPham, instance.Get(id).getTenSanPham());
+        assertEquals(tenSanPham, instance.get(id).getTenSanPham());
     }
 
     /**
-     * Test of Get method, of class ProductRepository.
+     * Test of get method, of class ProductRepository.
      */
     @Test
     public void testGetAll() {
@@ -68,24 +68,24 @@ public class ProductRepositoryTest {
     }
 
     /**
-     * Test of Get method, of class ProductRepository.
+     * Test of get method, of class ProductRepository.
      */
     @Test
     public void testGetById() {
         int id = 1;
         ProductRepository instance = new ProductRepository();
-        SanPham result = instance.Get(id);
+        SanPham result = instance.get(id);
         assertEquals(1, result.getSanPhamId());
     }
 
     /**
-     * Test of Get method, of class ProductRepository.
+     * Test of get method, of class ProductRepository.
      */
     @Test
     public void testGetByIdNotExist() {
         int id = -1;
         ProductRepository instance = new ProductRepository();
-        SanPham result = instance.Get(id);
+        SanPham result = instance.get(id);
         assertNull(result);
     }
 
@@ -96,7 +96,7 @@ public class ProductRepositoryTest {
     public void testUpdateSuccess() {
         // Arrange
         ProductRepository instance = new ProductRepository();
-        SanPham sp = instance.Get(1);
+        SanPham sp = instance.get(1);
         String expected = "Updated";
         sp.setTenSanPham(expected);
 
@@ -104,7 +104,7 @@ public class ProductRepositoryTest {
         instance.update(sp);
 
         // Assert
-        assertEquals(expected, instance.Get(1).getTenSanPham());
+        assertEquals(expected, instance.get(1).getTenSanPham());
 
     }
 
@@ -140,7 +140,7 @@ public class ProductRepositoryTest {
         instance.delete(spToDeleteId);
 
         // Assert
-        assertNull(instance.Get(spToDeleteId));
+        assertNull(instance.get(spToDeleteId));
     }
 
 }
