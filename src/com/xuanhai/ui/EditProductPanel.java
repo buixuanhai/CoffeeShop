@@ -18,12 +18,12 @@ import javax.swing.JTextField;
  *
  * @author Admin
  */
-public class CreateProductJPanel extends javax.swing.JPanel {
+public class EditProductPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form NewJPanel
      */
-    public CreateProductJPanel() {
+    public EditProductPanel() {
         initComponents();
         initComboBox();
     }
@@ -124,7 +124,7 @@ public class CreateProductJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -142,6 +142,7 @@ public class CreateProductJPanel extends javax.swing.JPanel {
 
     private void initComboBox() {
         CategoryRepository repo = new CategoryRepository();
+
         categoryComboBox.setModel(new CategoryComboBoxModel(new Vector<>(repo.get())));
     }
 

@@ -18,11 +18,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -58,6 +60,9 @@ public class Main extends javax.swing.JFrame {
         categoryList.addListSelectionListener((e) -> {
             editCategoryButton.setVisible(true);
             deleteCategoryButton.setVisible(true);
+
+//            JOptionPane.showMessageDialog(this, categoryList.getSelectedValue().getLoaiSanPhamId());
+//            categoryList.getSelectedValue().getSanPhams().forEach(sp -> System.out.println(sp));
         });
 
     }
@@ -65,6 +70,11 @@ public class Main extends javax.swing.JFrame {
     public void disableCategoryButtons() {
         editCategoryButton.setVisible(false);
         deleteCategoryButton.setVisible(false);
+    }
+
+    public void disableProductButtons() {
+        editProductButton.setVisible(false);
+        deleteProductButton.setVisible(false);
     }
 
     private void InsertData() {
@@ -155,14 +165,14 @@ public class Main extends javax.swing.JFrame {
         helpPanel = new javax.swing.JPanel();
         foodAndBeveragePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        foodAndBeverageTable = new javax.swing.JTable();
+        productTable = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         categoryList = new javax.swing.JList<>();
         editCategoryButton = new javax.swing.JButton();
         addCategoryButton = new javax.swing.JButton();
         deleteCategoryButton = new javax.swing.JButton();
-        deleteCategoryButton1 = new javax.swing.JButton();
-        editCategoryButton1 = new javax.swing.JButton();
+        deleteProductButton = new javax.swing.JButton();
+        editProductButton = new javax.swing.JButton();
         addProductButton = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -416,7 +426,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Trang chính", homePanel);
@@ -480,7 +490,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, billPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
@@ -560,7 +570,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(totalValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Thống kê", statisticPanel);
@@ -738,13 +748,21 @@ public class Main extends javax.swing.JFrame {
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 411, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Hướng dẫn", helpPanel);
 
-        foodAndBeverageTable.setName("foodCategoryTable"); // NOI18N
-        jScrollPane1.setViewportView(foodAndBeverageTable);
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        productTable.setName("foodCategoryTable"); // NOI18N
+        jScrollPane1.setViewportView(productTable);
 
         jScrollPane6.setViewportView(categoryList);
 
@@ -778,15 +796,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        deleteCategoryButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
-        deleteCategoryButton1.setToolTipText("Xóa thông tin sản phẩm");
-        deleteCategoryButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        deleteCategoryButton1.setPreferredSize(new java.awt.Dimension(81, 81));
+        deleteProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
+        deleteProductButton.setToolTipText("Xóa thông tin sản phẩm");
+        deleteProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        deleteProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
 
-        editCategoryButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
-        editCategoryButton1.setToolTipText("Chỉnh sửa sản phẩm");
-        editCategoryButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        editCategoryButton1.setPreferredSize(new java.awt.Dimension(81, 81));
+        editProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
+        editProductButton.setToolTipText("Chỉnh sửa sản phẩm");
+        editProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        editProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        editProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProductButtonActionPerformed(evt);
+            }
+        });
 
         addProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Add\\Add_48x48.png")); // NOI18N
         addProductButton.setToolTipText("Thêm mới sản phẩm");
@@ -815,8 +838,8 @@ public class Main extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editCategoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteCategoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -842,10 +865,10 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
                                 .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
-                                .addComponent(editCategoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(deleteCategoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 160, Short.MAX_VALUE))
+                                .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 144, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
                         .addComponent(jLabel19)
@@ -1020,7 +1043,6 @@ public class Main extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Xóa loại sản phẩm này sẽ xóa tất cả các sản phẩm cùng loại. Bạn có chắc chắn muốn xóa?", "Cảnh báo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
 
-            int selectedIndex = categoryList.getSelectedIndex();
             LoaiSanPham loaiSanPham = categoryList.getSelectedValue();
             try {
                 categoryRepo.delete(loaiSanPham.getLoaiSanPhamId());
@@ -1040,7 +1062,7 @@ public class Main extends javax.swing.JFrame {
     private void addProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductButtonActionPerformed
         // TODO add your handling code here:
 
-        CreateProductJPanel p = new CreateProductJPanel();
+        EditProductPanel p = new EditProductPanel();
         int result = JOptionPane.showConfirmDialog(this, p, "Thêm mới sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
@@ -1062,6 +1084,42 @@ public class Main extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_addProductButtonActionPerformed
+
+    private void editProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductButtonActionPerformed
+
+        int row = productTable.getSelectedRow();
+        int id = (int) productTable.getValueAt(row, 0);
+        SanPham sp = productRepo.get(id);
+
+        EditProductPanel p = new EditProductPanel();
+
+        p.getNameTextField().setText(sp.getTenSanPham());
+        p.getPriceTextField().setText(sp.getDonGia().toString());
+        p.getQuantityTextField().setText(sp.getSoLuong().toString());
+        p.getCategoryComboBox().setSelectedItem(sp.getLoaiSanPham());
+
+        int result = JOptionPane.showConfirmDialog(this, p, "Cập nhật thông tin sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                String name = p.getNameTextField().getText();
+                BigDecimal price = new BigDecimal(p.getPriceTextField().getText());
+                int quantity = Integer.parseInt(p.getQuantityTextField().getText());
+                LoaiSanPham category = (LoaiSanPham) p.getCategoryComboBox().getSelectedItem();
+                sp.setTenSanPham(name);
+                sp.setDonGia(price);
+                sp.setSoLuong(quantity);
+                sp.setLoaiSanPham(category);
+
+                productRepo.update(sp);
+                initProductTable();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu thiếu hoặc không đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_editProductButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1121,18 +1179,17 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField currentTableNumberTextField;
     private javax.swing.JRadioButton dateRadio;
     private javax.swing.JButton deleteCategoryButton;
-    private javax.swing.JButton deleteCategoryButton1;
     private javax.swing.JButton deleteDiscountButton;
+    private javax.swing.JButton deleteProductButton;
     private javax.swing.JComboBox<String> discountComboBox;
     private javax.swing.JTextField discountPercentTextField;
     private javax.swing.JTable discountTable;
     private javax.swing.JComboBox<String> drinkComboBox;
     private javax.swing.JTextField drinkNumberTextField;
     private javax.swing.JButton editCategoryButton;
-    private javax.swing.JButton editCategoryButton1;
+    private javax.swing.JButton editProductButton;
     private javax.swing.JButton findButton;
     private javax.swing.JPanel foodAndBeveragePanel;
-    private javax.swing.JTable foodAndBeverageTable;
     private javax.swing.JComboBox<String> foodComboBox;
     private javax.swing.JTextField foodNumberTextField;
     private javax.swing.JPanel helpPanel;
@@ -1180,6 +1237,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField newTableIdStartTextField;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JComboBox<String> orderTableIdComboBox;
+    private javax.swing.JTable productTable;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel statisticPanel;
     private javax.swing.JTable statisticTable;
@@ -1191,6 +1249,14 @@ public class Main extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initProductTable() {
-        foodAndBeverageTable.setModel(new ProductTableModel());
+        productTable.setModel(new ProductTableModel());
+        productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        productTable.getSelectionModel().addListSelectionListener(e -> {
+            editProductButton.setVisible(true);
+            deleteProductButton.setVisible(true);
+        });
+
+        disableProductButtons();
+
     }
 }

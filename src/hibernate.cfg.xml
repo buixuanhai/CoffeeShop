@@ -40,27 +40,27 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-configuration>
-  <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/coffee_shop?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.connection.password"/>
-    <property name="hibernate.current_session_context_class">thread</property>
-    <property name="hibernate.transaction.auto_close_session">true</property>
-    <!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
-    <property name="hibernate.enable_lazy_load_no_trans">true</property>
-    <mapping class="com.xuanhai.models.LoaiSanPham"/>
-    <mapping class="com.xuanhai.models.SanPham"/>
-    <!--<mapping resource="com/xuanhai/models/LoaiSanPham.hbm.xml"/>-->
-    <!--<mapping resource="com/xuanhai/models/SanPham.hbm.xml"/>-->
-    <!--    <mapping resource="com/xuanhai/models/HoaDon.hbm.xml"/>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/coffee_shop?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=UTF-8</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.connection.password"/>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.transaction.auto_close_session">true</property>
+        <!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <mapping class="com.xuanhai.models.LoaiSanPham"/>
+        <mapping class="com.xuanhai.models.SanPham"/>
+        <!--<mapping resource="com/xuanhai/models/LoaiSanPham.hbm.xml"/>-->
+        <!--<mapping resource="com/xuanhai/models/SanPham.hbm.xml"/>-->
+        <!--    <mapping resource="com/xuanhai/models/HoaDon.hbm.xml"/>
         <mapping resource="com/xuanhai/models/User.hbm.xml"/>
         <mapping resource="com/xuanhai/models/ChiTietHoaDon.hbm.xml"/>
         <mapping resource="com/xuanhai/models/DatBan.hbm.xml"/>
         <mapping resource="com/xuanhai/models/Ban.hbm.xml"/>
         <mapping resource="com/xuanhai/models/NhanVien.hbm.xml"/>
         <mapping resource="com/xuanhai/models/UserHistory.hbm.xml"/>-->
-  </session-factory>
+    </session-factory>
 </hibernate-configuration>

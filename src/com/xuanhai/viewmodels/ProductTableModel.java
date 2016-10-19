@@ -22,7 +22,7 @@ public class ProductTableModel extends AbstractTableModel {
     private ProductRepository repo;
     private List<SanPham> data;
     private List<Object[]> model;
-    private String[] columnNames = { "ID", "Tên sản phẩm", "Đơn giá",
+    private String[] columnNames = {"ID", "Tên sản phẩm", "Đơn giá",
         "Số lượng", "Loai sản phẩm"};
 
     public ProductTableModel() {
@@ -52,7 +52,5 @@ public class ProductTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return columnNames[column];
     }
-    
-    
 
 }

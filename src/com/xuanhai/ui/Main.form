@@ -1122,8 +1122,8 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="editCategoryButton1" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="deleteCategoryButton1" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="editProductButton" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="deleteProductButton" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                           <Component id="addProductButton" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
@@ -1155,9 +1155,9 @@
                                   <Group type="102" attributes="0">
                                       <Component id="addProductButton" min="-2" pref="60" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="editCategoryButton1" min="-2" pref="60" max="-2" attributes="0"/>
+                                      <Component id="editProductButton" min="-2" pref="60" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="deleteCategoryButton1" min="-2" pref="60" max="-2" attributes="0"/>
+                                      <Component id="deleteProductButton" min="-2" pref="60" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="144" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
@@ -1192,9 +1192,18 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="foodAndBeverageTable">
+                <Component class="javax.swing.JTable" name="productTable">
                   <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="0" rowCount="0"/>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="foodCategoryTable" noResource="true"/>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1264,7 +1273,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteCategoryButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="deleteCategoryButton1">
+            <Component class="javax.swing.JButton" name="deleteProductButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\Admin\Downloads\Compressed\must_have_icons_icons_pack_120704\must_have_icon_set\Delete\Delete_48x48.png"/>
@@ -1278,7 +1287,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="editCategoryButton1">
+            <Component class="javax.swing.JButton" name="editProductButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\Admin\Downloads\Compressed\must_have_icons_icons_pack_120704\must_have_icon_set\Edit\Edit_48x48.png"/>
@@ -1291,6 +1300,9 @@
                   <Dimension value="[81, 81]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editProductButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="addProductButton">
               <Properties>
