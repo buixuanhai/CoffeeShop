@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -28,7 +29,7 @@ public class ProductRepository implements IProductRepository {
 
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
-        List<SanPham> results = s.createCriteria(SanPham.class).list();
+        List<SanPham> results = s.createCriteria(SanPham.class).addOrder(Order.asc("sanPhamId")).list();
         s.getTransaction().commit();
         return results;
     }

@@ -28,12 +28,7 @@ public class SanPham implements java.io.Serializable {
     public SanPham() {
     }
 
-    public SanPham(String tenSanPham) {
-        this.tenSanPham = tenSanPham;
-    }
-
-    public SanPham(int sanPhamId, String tenSanPham, BigDecimal donGia, Integer soLuong, LoaiSanPham loaiSanPham) {
-        this.sanPhamId = sanPhamId;
+    public SanPham(String tenSanPham, BigDecimal donGia, Integer soLuong, LoaiSanPham loaiSanPham) {
         this.tenSanPham = tenSanPham;
         this.donGia = donGia;
         this.soLuong = soLuong;
@@ -60,7 +55,7 @@ public class SanPham implements java.io.Serializable {
         this.tenSanPham = tenSanPham;
     }
 
-    @Column(name = "don_gia", scale = 2 )
+    @Column(name = "don_gia", scale = 2)
     public BigDecimal getDonGia() {
         return this.donGia;
     }
@@ -77,7 +72,7 @@ public class SanPham implements java.io.Serializable {
     public void setSoLuong(Integer soLuong) {
         this.soLuong = soLuong;
     }
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loai_san_pham_id", nullable = false)
     public LoaiSanPham getLoaiSanPham() {
@@ -86,6 +81,11 @@ public class SanPham implements java.io.Serializable {
 
     public void setLoaiSanPham(LoaiSanPham loaiSanPham) {
         this.loaiSanPham = loaiSanPham;
+    }
+
+    @Override
+    public String toString() {
+        return "SanPham{" + "sanPhamId=" + sanPhamId + ", tenSanPham=" + tenSanPham + ", donGia=" + donGia + ", soLuong=" + soLuong + ", loaiSanPham=" + loaiSanPham + '}';
     }
 
 }

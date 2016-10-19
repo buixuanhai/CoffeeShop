@@ -12,16 +12,19 @@ import java.math.BigDecimal;
  * @author Admin
  */
 public class ProductViewModel {
+
     private int id;
     private String name;
     private BigDecimal price;
     private int quantity;
+    private int loaiSanPhamId;
 
-    public ProductViewModel(int id, String name, BigDecimal price, int quantity) {
+    public ProductViewModel(int id, String name, BigDecimal price, int quantity, int loaiSanPhamId) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.loaiSanPhamId = loaiSanPhamId;
     }
 
     public int getId() {
@@ -55,6 +58,13 @@ public class ProductViewModel {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    
+
+    public int getLoaiSanPhamId() {
+        return loaiSanPhamId;
+    }
+
+    public void setLoaiSanPhamId(int loaiSanPhamId) {
+        this.loaiSanPhamId = loaiSanPhamId;
+    }
+
 }

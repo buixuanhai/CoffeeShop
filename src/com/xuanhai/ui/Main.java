@@ -6,11 +6,15 @@
 package com.xuanhai.ui;
 
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.ProductRepository;
+import com.xuanhai.util.HibernateUtil;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,12 +32,14 @@ public class Main extends javax.swing.JFrame {
 
     private final CategoryRepository categoryRepo = new CategoryRepository();
 
+    private final ProductRepository productRepo = new ProductRepository();
+
     /**
      * Creates new form NewJFrame
      */
     public Main() {
         initComponents();
-
+        setResizable(false);
         initTables();
 
     }
@@ -1011,7 +1017,7 @@ public class Main extends javax.swing.JFrame {
     private void deleteCategoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCategoryButtonActionPerformed
         // TODO add your handling code here:
 
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Xóa loại sản phẩm này sẽ xóa tất cả các sản phẩm cùng loại. Bạn có chắc chắn muốn xóa", "Cảnh báo", JOptionPane.OK_CANCEL_OPTION);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Xóa loại sản phẩm này sẽ xóa tất cả các sản phẩm cùng loại. Bạn có chắc chắn muốn xóa?", "Cảnh báo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
 
             int selectedIndex = categoryList.getSelectedIndex();
@@ -1022,7 +1028,7 @@ public class Main extends javax.swing.JFrame {
                 initCategoryListBox();
                 initProductTable();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm", "Lỗi", JOptionPane.ERROR);
+                JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
 
             disableCategoryButtons();
@@ -1034,13 +1040,26 @@ public class Main extends javax.swing.JFrame {
     private void addProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductButtonActionPerformed
         // TODO add your handling code here:
 
-//        int result = JOptionPane.showConfirmDialog(this, createProductPanel, "Thêm mới sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-//        if (result == JOptionPane.OK_OPTION) {
-//            Utilities.Log(Level.INFO, "Shown");
-//            Utilities.Log(Level.INFO, createProductNameTextField.getText());
-//        }
+        CreateProductJPanel p = new CreateProductJPanel();
+        int result = JOptionPane.showConfirmDialog(this, p, "Thêm mới sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-    new NewJDialog(this, true).setVisible(true);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                String name = p.getNameTextField().getText();
+                BigDecimal price = new BigDecimal(p.getPriceTextField().getText());
+                int quantity = Integer.parseInt(p.getQuantityTextField().getText());
+                LoaiSanPham category = (LoaiSanPham) p.getCategoryComboBox().getSelectedItem();
+                SanPham sp = new SanPham(name, price, quantity, category);
+
+                productRepo.create(sp);
+                initProductTable();
+
+                Utilities.Log(Level.INFO, sp.toString());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu thiếu hoặc không đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
 
     }//GEN-LAST:event_addProductButtonActionPerformed
 
