@@ -800,6 +800,11 @@ public class Main extends javax.swing.JFrame {
         deleteProductButton.setToolTipText("Xóa thông tin sản phẩm");
         deleteProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         deleteProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        deleteProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteProductButtonActionPerformed(evt);
+            }
+        });
 
         editProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
         editProductButton.setToolTipText("Chỉnh sửa sản phẩm");
@@ -1120,6 +1125,23 @@ public class Main extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_editProductButtonActionPerformed
+
+    private void deleteProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProductButtonActionPerformed
+        int row = productTable.getSelectedRow();
+        int id = (int) productTable.getValueAt(row, 0);
+        SanPham sp = productRepo.get(id);
+
+        int result = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa sản phẩm: " + sp.getTenSanPham(), "Xóa sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        try {
+            if (result == JOptionPane.OK_OPTION) {
+                productRepo.delete(sp.getSanPhamId());
+            }
+            initProductTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
+        }
+    }//GEN-LAST:event_deleteProductButtonActionPerformed
 
     /**
      * @param args the command line arguments
