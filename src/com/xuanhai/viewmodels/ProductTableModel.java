@@ -23,13 +23,13 @@ public class ProductTableModel extends AbstractTableModel {
     private List<SanPham> data;
     private List<Object[]> model;
     private String[] columnNames = { "ID", "Tên sản phẩm", "Đơn giá",
-        "Số lượng" };
+        "Số lượng", "Loai sản phẩm"};
 
     public ProductTableModel() {
         repo = new ProductRepository();
         this.data = repo.get();
 
-        model = data.stream().map(d -> new Object[]{d.getSanPhamId(), d.getTenSanPham(), d.getDonGia(), d.getSoLuong()}).collect(Collectors.toList());
+        model = data.stream().map(d -> new Object[]{d.getSanPhamId(), d.getTenSanPham(), d.getDonGia(), d.getSoLuong(), d.getLoaiSanPham()}).collect(Collectors.toList());
 
     }
 
@@ -40,7 +40,7 @@ public class ProductTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
