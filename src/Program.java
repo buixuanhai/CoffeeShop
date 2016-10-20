@@ -1,11 +1,13 @@
 
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.ui.Main;
 import com.xuanhai.util.HibernateUtil;
 import java.math.BigDecimal;
+import java.util.Date;
 import org.hibernate.Session;
 
 /*
@@ -24,8 +26,14 @@ public class Program {
     public static void main(String[] args) throws InterruptedException {
 
 //        SanPham sp = getSanPham();
-       
+
         new Main().setVisible(true);
+        
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        s.getTransaction().commit();
+        
+        
 //        HibernateUtil.getSessionFactory().close();
     }
 
