@@ -5,22 +5,13 @@
  */
 package com.xuanhai.repositories;
 
-import com.xuanhai.models.LoaiSanPham;
-import java.util.List;
+import com.xuanhai.models.NhanVien;
 
 /**
  *
  * @author Admin
+ * @param <NhanVien>
  */
-public interface IRepository<T> {
-
-    List<T> get();
-
-    T get(int id);
-
-    int create(T object);
-
-    int delete(int id);
-
-    int update(T object);
+public interface IEmployeeRepository<NhanVien> extends IRepository<NhanVien>{
+    
 }
