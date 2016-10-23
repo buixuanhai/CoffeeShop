@@ -91,12 +91,12 @@ public class ProductRepository implements IProductRepository {
 
     }
 
-    @Override
-    public List<SanPham> getByCategory(int id) {
-        CategoryRepository repo = new CategoryRepository();
-
-        return new ArrayList<>(repo.get(id).getSanPhams());
-        
-    }
+//    @Override
+//    public List<SanPham> getByCategory(int id) {
+//        CategoryRepository repo = new CategoryRepository();
+//
+//        return new ArrayList<>(repo.get(id).getSanPhams());
+//        
+//    }
 
 }

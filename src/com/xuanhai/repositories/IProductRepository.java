@@ -6,25 +6,10 @@
 package com.xuanhai.repositories;
 
 import com.xuanhai.models.SanPham;
-import java.util.List;
 
 /**
  *
  * @author Admin
  */
-public interface IProductRepository {
-
-    List<SanPham> get();
-
-    SanPham get(int id);
-    
-    List<SanPham> getByCategory(int id);
-
-    int create(SanPham sanPham);
-
-    int delete(int sanPhamId);
-
-    int update(SanPham sanPham);
-    
-
+public interface IProductRepository extends IRepository<SanPham>{
 }

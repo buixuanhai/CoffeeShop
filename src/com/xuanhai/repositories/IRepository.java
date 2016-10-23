@@ -5,7 +5,6 @@
  */
 package com.xuanhai.repositories;
 
-import com.xuanhai.models.LoaiSanPham;
 import java.util.List;
 
 /**
