@@ -582,6 +582,11 @@ public class Main extends javax.swing.JFrame {
         jLabel12.setText("Số lượng");
 
         updateTableNumberButton.setText("Cập nhật");
+        updateTableNumberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateTableNumberButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1142,6 +1147,11 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
         }
     }//GEN-LAST:event_deleteProductButtonActionPerformed
+
+    private void updateTableNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTableNumberButtonActionPerformed
+        // TODO add your handling code here:
+        Utilities.Log(Level.INFO, "Hello");
+    }//GEN-LAST:event_updateTableNumberButtonActionPerformed
 
     /**
      * @param args the command line arguments
