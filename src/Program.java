@@ -1,13 +1,11 @@
 
 import com.xuanhai.models.LoaiSanPham;
-import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
-import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.ProductRepository;
+import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.ui.Main;
 import com.xuanhai.util.HibernateUtil;
-import org.hibernate.Session;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,15 +22,13 @@ public class Program {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        SanPham sp = getSanPham();
-        new Main().setVisible(true);
+        TableRepository repo = new TableRepository();
+        repo.create(4,4);
+        
+//        new Main().setVisible(true);
 
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-        EmployeeRepository repo = new EmployeeRepository();
-        repo.delete(5);
+        HibernateUtil.getSessionFactory().close();
 
-//        HibernateUtil.getSessionFactory().close();
     }
 
     public static SanPham getSanPham() {

@@ -54,6 +54,7 @@ Contributor(s):
         <mapping class="com.xuanhai.models.LoaiSanPham"/>
         <mapping class="com.xuanhai.models.SanPham"/>
         <mapping class="com.xuanhai.models.NhanVien"/>
+        <mapping class="com.xuanhai.models.Ban"/>
         <!--<mapping resource="com/xuanhai/models/LoaiSanPham.hbm.xml"/>-->
         <!--<mapping resource="com/xuanhai/models/SanPham.hbm.xml"/>-->
         <!--    <mapping resource="com/xuanhai/models/HoaDon.hbm.xml"/>
