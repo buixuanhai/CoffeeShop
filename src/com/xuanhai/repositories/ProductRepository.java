@@ -18,7 +18,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Admin
  */
-public class ProductRepository implements IProductRepository {
+public class ProductRepository implements IRepository<SanPham> {
 
     public ProductRepository() {
     }

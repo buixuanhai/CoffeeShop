@@ -860,11 +860,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="tableNumberTextField" min="-2" pref="79" max="-2" attributes="0"/>
+                          <Component id="numberOfTableTextField" min="-2" pref="79" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="newTableIdStartTextField" min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="tableStartIdTextField" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="updateTableNumberButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -877,9 +877,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tableNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="numberOfTableTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="newTableIdStartTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tableStartIdTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="updateTableNumberButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -898,9 +898,9 @@
                     <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="newTableIdStartTextField">
+                <Component class="javax.swing.JTextField" name="tableStartIdTextField">
                 </Component>
-                <Component class="javax.swing.JTextField" name="tableNumberTextField">
+                <Component class="javax.swing.JTextField" name="numberOfTableTextField">
                 </Component>
                 <Component class="javax.swing.JButton" name="updateTableNumberButton">
                   <Properties>

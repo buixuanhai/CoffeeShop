@@ -6,14 +6,13 @@
 package com.xuanhai.repositories;
 
 import com.xuanhai.models.NhanVien;
-import com.xuanhai.models.SanPham;
 import com.xuanhai.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class EmployeeRepository implements IEmployeeRepository<NhanVien> {
+public class EmployeeRepository implements IRepository<NhanVien> {
 
     @Override
     public List<NhanVien> get() {

@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Admin
  */
-public class CategoryRepository implements ICategoryRepository {
+public class CategoryRepository implements IRepository<LoaiSanPham> {
 
     @Override
     public int create(LoaiSanPham loaiSanPham) {

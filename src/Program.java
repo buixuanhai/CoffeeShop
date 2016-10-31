@@ -3,9 +3,7 @@ import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.ProductRepository;
-import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.ui.Main;
-import com.xuanhai.util.HibernateUtil;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,12 +20,12 @@ public class Program {
 
     public static void main(String[] args) throws InterruptedException {
 
-        TableRepository repo = new TableRepository();
-        repo.create(4,4);
+//        TableRepository repo = new TableRepository();
+//        repo.create(4,4);
         
-//        new Main().setVisible(true);
+        new Main().setVisible(true);
 
-        HibernateUtil.getSessionFactory().close();
+//        HibernateUtil.getSessionFactory().close();
 
     }
 
