@@ -9,21 +9,15 @@ import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.ProductRepository;
-import com.xuanhai.util.HibernateUtil;
+import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
 import com.xuanhai.viewmodels.ProductTableModel;
-import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -42,13 +36,15 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setResizable(false);
-        initTables();
+        initTablesAndInputs();
 
     }
 
-    private void initTables() {
+    private void initTablesAndInputs() {
         initCategoryListBox();
         initProductTable();
+        initCurrentTables();
+        initDiscountList();
     }
 
     private void initCategoryListBox() {
@@ -153,8 +149,6 @@ public class Main extends javax.swing.JFrame {
         discountPercentTextField = new javax.swing.JTextField();
         addDiscountButton = new javax.swing.JButton();
         deleteDiscountButton = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        discountTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -162,7 +156,8 @@ public class Main extends javax.swing.JFrame {
         currentTableNumberTextField = new javax.swing.JTextField();
         currentTableIdEndTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        helpPanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        discountList = new javax.swing.JList<>();
         foodAndBeveragePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
@@ -176,6 +171,7 @@ public class Main extends javax.swing.JFrame {
         addProductButton = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        helpPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -245,6 +241,8 @@ public class Main extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setToolTipText("");
 
         orderPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Đặt bàn"));
 
@@ -426,7 +424,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Trang chính", homePanel);
@@ -482,7 +480,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(billPanelLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 351, Short.MAX_VALUE)))
+                        .addGap(0, 381, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         billPanelLayout.setVerticalGroup(
@@ -490,7 +488,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, billPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
@@ -570,7 +568,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(totalValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Thống kê", statisticPanel);
@@ -653,19 +651,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        discountTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(discountTable);
-
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Sô lượng bàn hiện tại"));
 
         jLabel14.setText("Bắt đầu");
@@ -716,6 +701,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jScrollPane7.setViewportView(discountList);
+
         javax.swing.GroupLayout settingPanelLayout = new javax.swing.GroupLayout(settingPanel);
         settingPanel.setLayout(settingPanelLayout);
         settingPanelLayout.setHorizontalGroup(
@@ -723,40 +710,28 @@ public class Main extends javax.swing.JFrame {
             .addGroup(settingPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(480, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7)
+                    .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(500, Short.MAX_VALUE))
         );
         settingPanelLayout.setVerticalGroup(
             settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
         jTabbedPane1.addTab("Thiết lập", settingPanel);
-
-        javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
-        helpPanel.setLayout(helpPanelLayout);
-        helpPanelLayout.setHorizontalGroup(
-            helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 956, Short.MAX_VALUE)
-        );
-        helpPanelLayout.setVerticalGroup(
-            helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Hướng dẫn", helpPanel);
 
         productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -842,7 +817,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                     .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -878,7 +853,7 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 144, Short.MAX_VALUE))
+                                .addGap(0, 180, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
                         .addComponent(jLabel19)
@@ -896,6 +871,19 @@ public class Main extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Thức ăn / Đồ uống", foodAndBeveragePanel);
+
+        javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
+        helpPanel.setLayout(helpPanelLayout);
+        helpPanelLayout.setHorizontalGroup(
+            helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 954, Short.MAX_VALUE)
+        );
+        helpPanelLayout.setVerticalGroup(
+            helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Hướng dẫn", helpPanel);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Coffee Shop Manager 1.0");
@@ -1149,8 +1137,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteProductButtonActionPerformed
 
     private void updateTableNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTableNumberButtonActionPerformed
-        // TODO add your handling code here:
-        Utilities.Log(Level.INFO, "Hello");
+
+        TableRepository repo = new TableRepository();
+
+        try {
+            int number = Integer.parseInt(numberOfTableTextField.getText());
+            int start = Integer.parseInt(tableStartIdTextField.getText());
+            repo.create(start, number);
+        } catch (Exception e) {
+//            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi nhập thiếu hoặc sai thông tin ");
+        }
+
+        initCurrentTables();
+
     }//GEN-LAST:event_updateTableNumberButtonActionPerformed
 
     /**
@@ -1214,8 +1214,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton deleteDiscountButton;
     private javax.swing.JButton deleteProductButton;
     private javax.swing.JComboBox<String> discountComboBox;
+    private javax.swing.JList<String> discountList;
     private javax.swing.JTextField discountPercentTextField;
-    private javax.swing.JTable discountTable;
     private javax.swing.JComboBox<String> drinkComboBox;
     private javax.swing.JTextField drinkNumberTextField;
     private javax.swing.JButton editCategoryButton;
@@ -1260,9 +1260,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JRadioButton monthRadio;
@@ -1291,4 +1291,17 @@ public class Main extends javax.swing.JFrame {
         disableProductButtons();
 
     }
+
+    private void initCurrentTables() {
+        TableRepository repo = new TableRepository();
+
+        currentTableNumberTextField.setText(Integer.toString(repo.count()));
+        currentTableIdStartTextField.setText(Integer.toString(repo.getFirstTableId()));
+        currentTableIdEndTextField.setText(Integer.toString(repo.getLastTableId()));
+    }
+
+    private void initDiscountList() {
+
+    }
+
 }

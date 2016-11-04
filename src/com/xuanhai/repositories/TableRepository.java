@@ -7,8 +7,11 @@ package com.xuanhai.repositories;
 
 import com.xuanhai.models.Ban;
 import com.xuanhai.util.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -30,9 +33,42 @@ public class TableRepository {
         s.getTransaction().commit();
     }
 
+    public int count() {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+
+        s.beginTransaction();
+
+        Number count = (Number) s.createCriteria(Ban.class).setProjection(Projections.rowCount()).uniqueResult();
+
+        s.getTransaction().commit();
+
+        return count.intValue();
+    }
+
+    public int getFirstTableId() {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        Ban b = (Ban) s.createCriteria(Ban.class).setMaxResults(1).list().get(0);
+
+        s.getTransaction().commit();
+
+        return Integer.parseInt(b.getSoBan());
+    }
+
+    public int getLastTableId() {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        Ban b = (Ban) s.createCriteria(Ban.class).addOrder(Order.desc("banId")).setMaxResults(1).list().get(0);
+
+        s.getTransaction().commit();
+
+        return Integer.parseInt(b.getSoBan());
+    }
+
     /**
      * Hàm delete tham khảo
-     * @return 
+     *
+     * @return
      */
     public int delete() {
 
