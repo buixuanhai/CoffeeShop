@@ -48,6 +48,7 @@ public class TableRepository {
     public int getFirstTableId() {
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
+        
         Ban b = (Ban) s.createCriteria(Ban.class).setMaxResults(1).list().get(0);
 
         s.getTransaction().commit();

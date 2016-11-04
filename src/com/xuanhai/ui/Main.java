@@ -1294,6 +1294,7 @@ public class Main extends javax.swing.JFrame {
 
     private void initCurrentTables() {
         TableRepository repo = new TableRepository();
+        repo.create(1, 10);
 
         currentTableNumberTextField.setText(Integer.toString(repo.count()));
         currentTableIdStartTextField.setText(Integer.toString(repo.getFirstTableId()));
