@@ -54,7 +54,7 @@ public class GiamGia implements Serializable {
 
     @Override
     public String toString() {
-        return Integer.toString(phanTram);
+        return Integer.toString(phanTram) + "%";
     }
 
 }

@@ -7,9 +7,11 @@ package com.xuanhai.ui;
 
 import com.xuanhai.models.GiamGia;
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.DiscountRepository;
+import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
@@ -18,8 +20,12 @@ import com.xuanhai.viewmodels.DiscountListModel;
 import com.xuanhai.viewmodels.EmployeeTableModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -38,13 +44,17 @@ public class Main extends javax.swing.JFrame {
 
     private final TableRepository tableRepo = new TableRepository();
 
+    private final EmployeeRepository employeeRepo = new EmployeeRepository();
+
+    private int editingEmployeeId = 0;
+
     /**
      * Creates new form NewJFrame
      */
     public Main() {
         initComponents();
         setResizable(false);
-//        seed();
+        seed();
         initUIs();
     }
 
@@ -53,7 +63,7 @@ public class Main extends javax.swing.JFrame {
         initProductTable();
         initCurrentTables();
         initDiscountList();
-        initEmployeeTable();
+        initEmployeeTab();
     }
 
     private void seed() {
@@ -65,6 +75,28 @@ public class Main extends javax.swing.JFrame {
         for (int i = 0; i < 3; i++) {
             discountRepo.create(new GiamGia((i + 1) * 10));
         }
+
+        // create categories
+        categoryRepo.create(new LoaiSanPham("Thức uống"));
+        categoryRepo.create(new LoaiSanPham("Đồ ăn"));
+
+        LoaiSanPham drink = categoryRepo.get(1);
+        LoaiSanPham food = categoryRepo.get(2);
+        // create products
+        productRepo.create(new SanPham("Coffee đen", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Coffee sữa", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Pepsi ", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Trà đào", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Nước suối", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Seven up", new BigDecimal(10000), 0, drink));
+        productRepo.create(new SanPham("Cola", new BigDecimal(10000), 0, drink));
+
+        productRepo.create(new SanPham("Hạt hướng dương", new BigDecimal(10000), 0, food));
+        productRepo.create(new SanPham("Hạt dưa", new BigDecimal(10000), 0, food));
+        productRepo.create(new SanPham("Hạt điều", new BigDecimal(10000), 0, food));
+        productRepo.create(new SanPham("Bánh phồng tôm", new BigDecimal(10000), 0, food));
+        productRepo.create(new SanPham("Đậu phộng", new BigDecimal(10000), 0, food));
+
     }
 
     private void initProductTable() {
@@ -86,9 +118,13 @@ public class Main extends javax.swing.JFrame {
         currentTableIdEndTextField.setText(Integer.toString(tableRepo.getLastTableId()));
     }
 
-    private void initEmployeeTable() {
+    private void initEmployeeTab() {
+        employeeNameTextField.setText("");
+        employeeBirthdayTextField.setText("");
+        employeeHiredDateTextField.setText("");
         employeesTable.setModel(new EmployeeTableModel());
         employeesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
 
     private void initCategoryListBox() {
@@ -201,6 +237,9 @@ public class Main extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
+        deleteEmployeeButton = new javax.swing.JButton();
+        editEmployeeButton = new javax.swing.JButton();
+        updateEmployeeButton = new javax.swing.JButton();
         foodAndBeveragePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
@@ -660,6 +699,11 @@ public class Main extends javax.swing.JFrame {
         jLabel29.setText("Ngày vào làm");
 
         addEmployeeButton.setText("Thêm mới");
+        addEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         jLabel30.setText("dd/mm/yyyy");
 
@@ -713,6 +757,27 @@ public class Main extends javax.swing.JFrame {
 
         jLabel32.setText("Danh sách nhân viên");
 
+        deleteEmployeeButton.setText("Xóa");
+        deleteEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteEmployeeButtonActionPerformed(evt);
+            }
+        });
+
+        editEmployeeButton.setText("Sửa");
+        editEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editEmployeeButtonActionPerformed(evt);
+            }
+        });
+
+        updateEmployeeButton.setText("Lưu");
+        updateEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateEmployeeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout employeePanelLayout = new javax.swing.GroupLayout(employeePanel);
         employeePanel.setLayout(employeePanelLayout);
         employeePanelLayout.setHorizontalGroup(
@@ -728,19 +793,33 @@ public class Main extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel32)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(editEmployeeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateEmployeeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteEmployeeButton)
+                .addGap(188, 188, 188))
         );
         employeePanelLayout.setVerticalGroup(
             employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(employeePanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(212, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel32)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(employeePanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(employeePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(editEmployeeButton)
+                    .addComponent(updateEmployeeButton)
+                    .addComponent(deleteEmployeeButton))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Nhân viên", employeePanel);
@@ -1374,7 +1453,6 @@ public class Main extends javax.swing.JFrame {
             GiamGia giamGia = discountList.getSelectedValue();
             try {
                 discountRepo.delete(giamGia.getGiamGiaId());
-                JOptionPane.showMessageDialog(this, "Xóa giảm giá thành công");
                 initDiscountList();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi xóa giảm giá", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -1382,6 +1460,138 @@ public class Main extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_deleteDiscountButtonActionPerformed
+
+    private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
+        // TODO add your handling code here:
+
+        String name = employeeNameTextField.getText();
+        String birthdayText = employeeBirthdayTextField.getText();
+        String hiredDateText = employeeHiredDateTextField.getText();
+        Date birthday = null;
+        Date hiredDay = null;
+
+        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Thiếu thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+
+        try {
+            birthday = df.parse(birthdayText);
+            hiredDay = df.parse(hiredDateText);
+            System.out.println(birthday);
+            System.out.println(hiredDay);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi ngày sinh", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            employeeRepo.create(new NhanVien(name, birthday, hiredDay));
+            initEmployeeTab();
+            JOptionPane.showMessageDialog(this, "Thêm mới nhan viên thành công");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tạo nhân viên mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_addEmployeeButtonActionPerformed
+
+    private void editEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmployeeButtonActionPerformed
+        // TODO add your handling code here:
+        int row = employeesTable.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn sửa");
+            return;
+        }
+        int id = (int) employeesTable.getValueAt(row, 0);
+
+        NhanVien nhanVien = employeeRepo.get(id);
+
+        if (nhanVien != null) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            employeeNameTextField.setText(nhanVien.getHoTen());
+            employeeBirthdayTextField.setText(df.format(nhanVien.getNgaySinh()));
+            employeeHiredDateTextField.setText(df.format(nhanVien.getNgayVaoLam()));
+            editingEmployeeId = id;
+        }
+
+    }//GEN-LAST:event_editEmployeeButtonActionPerformed
+
+    private void updateEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmployeeButtonActionPerformed
+
+        if (editingEmployeeId == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để cập nhật");
+            return;
+        }
+        String name = employeeNameTextField.getText();
+        String birthdayText = employeeBirthdayTextField.getText();
+        String hiredDateText = employeeHiredDateTextField.getText();
+        Date birthday = null;
+        Date hiredDay = null;
+
+        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Thiếu thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+
+        try {
+            birthday = df.parse(birthdayText);
+            hiredDay = df.parse(hiredDateText);
+            System.out.println(birthday);
+            System.out.println(hiredDay);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi ngày sinh", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        NhanVien nhanVien = employeeRepo.get(editingEmployeeId);
+        if (nhanVien != null) {
+            nhanVien.setHoTen(name);
+            nhanVien.setNgaySinh(hiredDay);
+            nhanVien.setNgayVaoLam(hiredDay);
+
+            try {
+                employeeRepo.update(nhanVien);
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin nhân viên thành công");
+                editingEmployeeId = 0;
+
+                initEmployeeTab();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin nhân viên không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_updateEmployeeButtonActionPerformed
+
+    private void deleteEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEmployeeButtonActionPerformed
+        // TODO add your handling code here:
+        int row = employeesTable.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn xóa");
+            return;
+        }
+        int id = (int) employeesTable.getValueAt(row, 0);
+
+        int result = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhân viên: " + employeeRepo.get(id).getHoTen(), "Xóa nhân viên", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        try {
+            if (result == JOptionPane.OK_OPTION) {
+                employeeRepo.delete(id);
+                JOptionPane.showMessageDialog(this, "Xóa thành công nhân viên");
+                initEmployeeTab();
+            }
+            initProductTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xóa nhân viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_deleteEmployeeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1444,6 +1654,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JRadioButton dateRadio;
     private javax.swing.JButton deleteCategoryButton;
     private javax.swing.JButton deleteDiscountButton;
+    private javax.swing.JButton deleteEmployeeButton;
     private javax.swing.JButton deleteProductButton;
     private javax.swing.JComboBox<String> discountComboBox;
     private javax.swing.JList<GiamGia> discountList;
@@ -1451,6 +1662,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> drinkComboBox;
     private javax.swing.JTextField drinkNumberTextField;
     private javax.swing.JButton editCategoryButton;
+    private javax.swing.JButton editEmployeeButton;
     private javax.swing.JButton editProductButton;
     private javax.swing.JTextField employeeBirthdayTextField;
     private javax.swing.JTextField employeeHiredDateTextField;
@@ -1521,6 +1733,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField tableStartIdTextField;
     private javax.swing.JLabel totalFreeLabel;
     private javax.swing.JLabel totalValueLabel;
+    private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateTableNumberButton;
     private javax.swing.JRadioButton weekRadio;
     // End of variables declaration//GEN-END:variables

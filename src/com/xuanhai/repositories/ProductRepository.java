@@ -28,7 +28,7 @@ public class ProductRepository implements IRepository<SanPham> {
 
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
-        List<SanPham> results = s.createCriteria(SanPham.class).addOrder(Order.asc("sanPhamId")).list();
+        List<SanPham> results = s.createCriteria(SanPham.class).addOrder(Order.asc("loaiSanPham")).list();
         s.getTransaction().commit();
         return results;
     }

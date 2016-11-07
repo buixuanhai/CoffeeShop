@@ -21,7 +21,13 @@ public class Program {
     public static void main(String[] args) throws InterruptedException {
 
         new Main().setVisible(true);
+//        EmployeeRepository repo = new EmployeeRepository();
+//        
+//        NhanVien nv = new NhanVien("Hai", new Date(93, 1, 1), new Date(116, 1, 1));
+//        System.out.println(nv.getNgaySinh());
+//        repo.create(nv);
 //        HibernateUtil.getSessionFactory().close();
+      
     }
 
     public static SanPham getSanPham() {
