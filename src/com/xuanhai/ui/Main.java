@@ -5,13 +5,16 @@
  */
 package com.xuanhai.ui;
 
+import com.xuanhai.models.GiamGia;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.DiscountRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
+import com.xuanhai.viewmodels.DiscountListModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,17 +33,19 @@ public class Main extends javax.swing.JFrame {
 
     private final ProductRepository productRepo = new ProductRepository();
 
+    private final DiscountRepository discountRepo = new DiscountRepository();
+
     /**
      * Creates new form NewJFrame
      */
     public Main() {
         initComponents();
         setResizable(false);
-        initTablesAndInputs();
+        initUIs();
 
     }
 
-    private void initTablesAndInputs() {
+    private void initUIs() {
         initCategoryListBox();
         initProductTable();
         initCurrentTables();
@@ -60,6 +65,12 @@ public class Main extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, categoryList.getSelectedValue().getLoaiSanPhamId());
 //            categoryList.getSelectedValue().getSanPhams().forEach(sp -> System.out.println(sp));
         });
+
+    }
+
+    private void initDiscountList() {
+        DiscountListModel model = new DiscountListModel();
+        discountList.setModel(model);
 
     }
 
@@ -172,6 +183,7 @@ public class Main extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         discountList = new javax.swing.JList<>();
+        jLabel26 = new javax.swing.JLabel();
         helpPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -774,8 +786,18 @@ public class Main extends javax.swing.JFrame {
         jLabel15.setText("Phần trăm");
 
         addDiscountButton.setText("Thêm");
+        addDiscountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDiscountButtonActionPerformed(evt);
+            }
+        });
 
         deleteDiscountButton.setText("Xóa");
+        deleteDiscountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteDiscountButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -856,17 +878,21 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane7.setViewportView(discountList);
 
+        jLabel26.setText("Danh sách khuyến mãi");
+
         javax.swing.GroupLayout settingPanelLayout = new javax.swing.GroupLayout(settingPanel);
         settingPanel.setLayout(settingPanelLayout);
         settingPanelLayout.setHorizontalGroup(
             settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane7)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26)
+                    .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane7)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(500, Short.MAX_VALUE))
         );
         settingPanelLayout.setVerticalGroup(
@@ -878,9 +904,11 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addGap(18, 18, 18))
         );
 
         TabbedPane.addTab("Thiết lập", settingPanel);
@@ -1166,6 +1194,49 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_updateTableNumberButtonActionPerformed
 
+    private void addDiscountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDiscountButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            int percent = Integer.parseInt(discountPercentTextField.getText());
+
+            List<GiamGia> discounts = discountRepo.get();
+            for (GiamGia discount : discounts) {
+                if (discount.getPhanTram() == percent) {
+                    JOptionPane.showMessageDialog(this, "Trùng thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            discountRepo.create(new GiamGia(percent));
+            initDiscountList();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Thông tin thiếu hoặc sai định dạng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addDiscountButtonActionPerformed
+
+    private void deleteDiscountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDiscountButtonActionPerformed
+        // TODO add your handling code here:
+        
+        if (discountList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn đối tượng để xóa");
+            return;
+        }
+
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn chắc xóa giảm giá này?", "Cảnh báo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+
+            GiamGia giamGia = discountList.getSelectedValue();
+            try {
+                discountRepo.delete(giamGia.getGiamGiaId());
+                JOptionPane.showMessageDialog(this, "Xóa giảm giá thành công");
+                initDiscountList();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi xóa giảm giá", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_deleteDiscountButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1228,7 +1299,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton deleteDiscountButton;
     private javax.swing.JButton deleteProductButton;
     private javax.swing.JComboBox<String> discountComboBox;
-    private javax.swing.JList<String> discountList;
+    private javax.swing.JList<GiamGia> discountList;
     private javax.swing.JTextField discountPercentTextField;
     private javax.swing.JComboBox<String> drinkComboBox;
     private javax.swing.JTextField drinkNumberTextField;
@@ -1259,6 +1330,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1313,10 +1385,6 @@ public class Main extends javax.swing.JFrame {
         currentTableNumberTextField.setText(Integer.toString(repo.count()));
         currentTableIdStartTextField.setText(Integer.toString(repo.getFirstTableId()));
         currentTableIdEndTextField.setText(Integer.toString(repo.getLastTableId()));
-    }
-
-    private void initDiscountList() {
-
     }
 
 }

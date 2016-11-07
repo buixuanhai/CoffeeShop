@@ -52,4 +52,9 @@ public class GiamGia implements Serializable {
         this.phanTram = phanTram;
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(phanTram);
+    }
+
 }

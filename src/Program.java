@@ -1,11 +1,9 @@
 
-import com.xuanhai.models.GiamGia;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
-import com.xuanhai.repositories.DiscountRepository;
 import com.xuanhai.repositories.ProductRepository;
-import java.util.List;
+import com.xuanhai.ui.Main;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +20,7 @@ public class Program {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        new Main().setVisible(true);
+        new Main().setVisible(true);
 //        HibernateUtil.getSessionFactory().close();
     }
 
