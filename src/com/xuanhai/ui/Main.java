@@ -35,14 +35,16 @@ public class Main extends javax.swing.JFrame {
 
     private final DiscountRepository discountRepo = new DiscountRepository();
 
+    private final TableRepository tableRepo = new TableRepository();
+
     /**
      * Creates new form NewJFrame
      */
     public Main() {
         initComponents();
         setResizable(false);
+//        seed();
         initUIs();
-
     }
 
     private void initUIs() {
@@ -50,6 +52,17 @@ public class Main extends javax.swing.JFrame {
         initProductTable();
         initCurrentTables();
         initDiscountList();
+    }
+
+    private void seed() {
+        
+        // Tables
+        tableRepo.create(1, 10);
+        
+        // Discounts
+        for (int i = 0; i < 3; i++) {
+            discountRepo.create(new GiamGia((i+1)*10));
+        }
     }
 
     private void initCategoryListBox() {
@@ -832,11 +845,11 @@ public class Main extends javax.swing.JFrame {
 
         jLabel16.setText("Số lượng");
 
-        currentTableIdStartTextField.setEnabled(false);
+        currentTableIdStartTextField.setEditable(false);
 
-        currentTableNumberTextField.setEnabled(false);
+        currentTableNumberTextField.setEditable(false);
 
-        currentTableIdEndTextField.setEnabled(false);
+        currentTableIdEndTextField.setEditable(false);
 
         jLabel17.setText("Kết thúc");
 
@@ -1216,7 +1229,7 @@ public class Main extends javax.swing.JFrame {
 
     private void deleteDiscountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDiscountButtonActionPerformed
         // TODO add your handling code here:
-        
+
         if (discountList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn đối tượng để xóa");
             return;
@@ -1379,12 +1392,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void initCurrentTables() {
-        TableRepository repo = new TableRepository();
-//        repo.create(1, 10);
 
-        currentTableNumberTextField.setText(Integer.toString(repo.count()));
-        currentTableIdStartTextField.setText(Integer.toString(repo.getFirstTableId()));
-        currentTableIdEndTextField.setText(Integer.toString(repo.getLastTableId()));
+        currentTableNumberTextField.setText(Integer.toString(tableRepo.count()));
+        currentTableIdStartTextField.setText(Integer.toString(tableRepo.getFirstTableId()));
+        currentTableIdEndTextField.setText(Integer.toString(tableRepo.getLastTableId()));
     }
 
 }
