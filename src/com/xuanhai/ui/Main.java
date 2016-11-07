@@ -1770,13 +1770,13 @@ public class Main extends javax.swing.JFrame {
         FoodComboBoxModel foodComboBoxModel = new FoodComboBoxModel(food);
         foodComboBox.setModel(foodComboBoxModel);
 
-        // Food combobox
+        // Drink combobox
         List<SanPham> drinkList = products.stream()
                 .filter(p -> p.getLoaiSanPham().getTenLoaiSanPham().equals("Thức uống"))
                 .collect(Collectors.toList());
 
         SanPham[] drink = new SanPham[foodList.size()];
-        food = drinkList.toArray(drink);
+        drink = drinkList.toArray(drink);
         DrinkComboBoxModel drinkComboBoxModel = new DrinkComboBoxModel(drink);
         drinkComboBox.setModel(drinkComboBoxModel);
 
