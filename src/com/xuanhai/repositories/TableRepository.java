@@ -6,7 +6,9 @@
 package com.xuanhai.repositories;
 
 import com.xuanhai.models.Ban;
+import com.xuanhai.models.NhanVien;
 import com.xuanhai.util.HibernateUtil;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,6 +21,17 @@ import org.hibernate.criterion.Projections;
  */
 public class TableRepository {
 
+    public List<Ban> get() {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        List<Ban> results = null;
+
+        results = s.createCriteria(Ban.class).list();
+
+        s.getTransaction().commit();
+        return results;
+    }
+
     public void create(int initial, int count) {
 
         Session s = HibernateUtil.getSessionFactory().openSession();
@@ -26,7 +39,7 @@ public class TableRepository {
         s.createSQLQuery("truncate table Ban").executeUpdate();
 
         for (int i = 0; i < count; i++) {
-            Ban b = new Ban(Integer.toString(initial + i), Integer.toString(1));
+            Ban b = new Ban(Integer.toString(initial + i), true);
             s.save(b);
         }
 
@@ -48,7 +61,7 @@ public class TableRepository {
     public int getFirstTableId() {
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
-        
+
         Ban b = (Ban) s.createCriteria(Ban.class).setMaxResults(1).list().get(0);
 
         s.getTransaction().commit();

@@ -1,18 +1,17 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 11, 2016 5:24:08 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.xuanhai.models.Ban" table="ban" catalog="coffee_shop" optimistic-lock="version">
-        <id name="banId" type="int">
-            <column name="ban_id" />
-            <generator class="assigned" />
-        </id>
-        <property name="soBan" type="string">
-            <column name="so_ban" length="45" />
-        </property>
-        <property name="trangThai" type="string">
-            <column name="trang_thai" length="45" />
-        </property>
-    </class>
+  <class catalog="coffee_shop" name="com.xuanhai.models.Ban" optimistic-lock="version" table="ban">
+    <id name="banId" type="int">
+      <column name="ban_id"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="soBan" type="string">
+      <column length="45" name="so_ban"/>
+    </property>
+    <property name="conTrong" type="string">
+      <column length="45" name="trang_thai"/>
+    </property>
+  </class>
 </hibernate-mapping>

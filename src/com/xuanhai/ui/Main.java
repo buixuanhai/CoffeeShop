@@ -5,6 +5,7 @@
  */
 package com.xuanhai.ui;
 
+import com.xuanhai.models.Ban;
 import com.xuanhai.models.GiamGia;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.NhanVien;
@@ -18,6 +19,7 @@ import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
 import com.xuanhai.viewmodels.DiscountListModel;
 import com.xuanhai.viewmodels.EmployeeTableModel;
+import com.xuanhai.viewmodels.OrderedTablesComboBoxModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -29,6 +31,8 @@ import java.util.Locale;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import com.xuanhai.viewmodels.TablesComboBoxModel;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -54,7 +58,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setResizable(false);
-        seed();
+//        seed();
         initUIs();
     }
 
@@ -64,6 +68,7 @@ public class Main extends javax.swing.JFrame {
         initCurrentTables();
         initDiscountList();
         initEmployeeTab();
+        initTableOrderTab();
     }
 
     private void seed() {
@@ -350,8 +355,6 @@ public class Main extends javax.swing.JFrame {
 
         orderPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Đặt bàn"));
 
-        orderTableIdComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn bàn", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
-
         jLabel4.setText("Bàn");
 
         jLabel5.setText("Thức uống");
@@ -444,8 +447,6 @@ public class Main extends javax.swing.JFrame {
                 checkoutButtonActionPerformed(evt);
             }
         });
-
-        checkoutTableIdComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn bàn", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jLabel11.setText("Trị giá hóa đơn");
 
@@ -1410,6 +1411,7 @@ public class Main extends javax.swing.JFrame {
             int number = Integer.parseInt(numberOfTableTextField.getText());
             int start = Integer.parseInt(tableStartIdTextField.getText());
             repo.create(start, number);
+            initTableOrderTab();
         } catch (Exception e) {
 //            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi nhập thiếu hoặc sai thông tin ");
@@ -1642,7 +1644,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable billTable;
     private javax.swing.JList<LoaiSanPham> categoryList;
     private javax.swing.JButton checkoutButton;
-    private javax.swing.JComboBox<String> checkoutTableIdComboBox;
+    private javax.swing.JComboBox<Ban> checkoutTableIdComboBox;
     private javax.swing.JComboBox<String> createProductCategoryComboBox;
     private javax.swing.JTextField createProductNameTextField;
     private javax.swing.JPanel createProductPanel;
@@ -1725,7 +1727,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JRadioButton monthRadio;
     private javax.swing.JTextField numberOfTableTextField;
     private javax.swing.JPanel orderPanel;
-    private javax.swing.JComboBox<String> orderTableIdComboBox;
+    private javax.swing.JComboBox<Ban> orderTableIdComboBox;
     private javax.swing.JTable productTable;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel statisticPanel;
@@ -1737,5 +1739,26 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton updateTableNumberButton;
     private javax.swing.JRadioButton weekRadio;
     // End of variables declaration//GEN-END:variables
+
+    private void initTableOrderTab() {
+        // List of all tables
+        List<Ban> tablesList = tableRepo.get();
+        Ban[] tables = new Ban[tablesList.size()];
+
+        tables = tablesList.toArray(tables);
+        TablesComboBoxModel tableComboBoxModel = new TablesComboBoxModel(tables);
+
+        orderTableIdComboBox.setModel(tableComboBoxModel);
+
+        // List of ordered tables
+        List<Ban> emptyTablesList = tablesList.stream()
+                .filter(t -> !t.getConTrong())
+                .collect(Collectors.toList());
+
+        Ban[] emptyTables = new Ban[emptyTablesList.size()];
+        emptyTables = emptyTablesList.toArray(emptyTables);
+        OrderedTablesComboBoxModel orderedTablesComboBoxModel = new OrderedTablesComboBoxModel(emptyTables);
+        checkoutTableIdComboBox.setModel(orderedTablesComboBoxModel);
+    }
 
 }
