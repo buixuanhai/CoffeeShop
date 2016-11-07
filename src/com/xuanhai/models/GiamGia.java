@@ -28,8 +28,7 @@ public class GiamGia implements Serializable {
 
     }
 
-    public GiamGia(int giamGiaId, int phanTram) {
-        this.giamGiaId = giamGiaId;
+    public GiamGia(int phanTram) {
         this.phanTram = phanTram;
     }
 

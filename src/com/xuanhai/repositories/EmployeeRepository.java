@@ -28,7 +28,7 @@ public class EmployeeRepository implements IRepository<NhanVien> {
 
     @Override
     public NhanVien get(int id) {
-       Session s = HibernateUtil.getSessionFactory().openSession();
+        Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
 
         List<NhanVien> employees = s.createCriteria(NhanVien.class).add(Restrictions.eq("nhanVienId", id)).list();
@@ -57,7 +57,7 @@ public class EmployeeRepository implements IRepository<NhanVien> {
 
     @Override
     public int delete(int id) {
-         NhanVien nv = this.get(id);
+        NhanVien nv = this.get(id);
         if (nv == null) {
             return -1;
         } else {

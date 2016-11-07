@@ -95,7 +95,7 @@ public class Main extends javax.swing.JFrame {
         createProductQuantityTextField = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         createProductCategoryComboBox = new javax.swing.JComboBox<>();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        TabbedPane = new javax.swing.JTabbedPane();
         homePanel = new javax.swing.JPanel();
         orderPanel = new javax.swing.JPanel();
         orderTableIdComboBox = new javax.swing.JComboBox<>();
@@ -137,6 +137,20 @@ public class Main extends javax.swing.JFrame {
         statisticTable = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         totalValueLabel = new javax.swing.JLabel();
+        employeePanel = new javax.swing.JPanel();
+        foodAndBeveragePanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        productTable = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        categoryList = new javax.swing.JList<>();
+        editCategoryButton = new javax.swing.JButton();
+        addCategoryButton = new javax.swing.JButton();
+        deleteCategoryButton = new javax.swing.JButton();
+        deleteProductButton = new javax.swing.JButton();
+        editProductButton = new javax.swing.JButton();
+        addProductButton = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         settingPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -158,19 +172,6 @@ public class Main extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         discountList = new javax.swing.JList<>();
-        foodAndBeveragePanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        productTable = new javax.swing.JTable();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        categoryList = new javax.swing.JList<>();
-        editCategoryButton = new javax.swing.JButton();
-        addCategoryButton = new javax.swing.JButton();
-        deleteCategoryButton = new javax.swing.JButton();
-        deleteProductButton = new javax.swing.JButton();
-        editProductButton = new javax.swing.JButton();
-        addProductButton = new javax.swing.JButton();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         helpPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -242,7 +243,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setToolTipText("");
+        TabbedPane.setToolTipText("");
 
         orderPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Đặt bàn"));
 
@@ -427,7 +428,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(103, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Trang chính", homePanel);
+        TabbedPane.addTab("Trang chính", homePanel);
 
         jScrollPane2.setViewportView(billTable);
 
@@ -493,7 +494,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
-        jTabbedPane1.addTab("Hóa đơn", billPanel);
+        TabbedPane.addTab("Hóa đơn", billPanel);
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Theo thời gian"));
 
@@ -571,7 +572,159 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Thống kê", statisticPanel);
+        TabbedPane.addTab("Thống kê", statisticPanel);
+
+        javax.swing.GroupLayout employeePanelLayout = new javax.swing.GroupLayout(employeePanel);
+        employeePanel.setLayout(employeePanelLayout);
+        employeePanelLayout.setHorizontalGroup(
+            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 954, Short.MAX_VALUE)
+        );
+        employeePanelLayout.setVerticalGroup(
+            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 413, Short.MAX_VALUE)
+        );
+
+        TabbedPane.addTab("Nhân viên", employeePanel);
+
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        productTable.setName("foodCategoryTable"); // NOI18N
+        jScrollPane1.setViewportView(productTable);
+
+        jScrollPane6.setViewportView(categoryList);
+
+        editCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
+        editCategoryButton.setToolTipText("Chỉnh sửa loại sản phẩm");
+        editCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        editCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        editCategoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCategoryButtonActionPerformed(evt);
+            }
+        });
+
+        addCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Add\\Add_48x48.png")); // NOI18N
+        addCategoryButton.setToolTipText("Thêm loại sản phẩm");
+        addCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        addCategoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCategoryButtonActionPerformed(evt);
+            }
+        });
+
+        deleteCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
+        deleteCategoryButton.setToolTipText("Xóa loại sản phẩm");
+        deleteCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        deleteCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        deleteCategoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCategoryButtonActionPerformed(evt);
+            }
+        });
+
+        deleteProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
+        deleteProductButton.setToolTipText("Xóa thông tin sản phẩm");
+        deleteProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        deleteProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        deleteProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteProductButtonActionPerformed(evt);
+            }
+        });
+
+        editProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
+        editProductButton.setToolTipText("Chỉnh sửa sản phẩm");
+        editProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        editProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        editProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProductButtonActionPerformed(evt);
+            }
+        });
+
+        addProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Add\\Add_48x48.png")); // NOI18N
+        addProductButton.setToolTipText("Thêm mới sản phẩm");
+        addProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
+        addProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Loại sản phẩm");
+
+        jLabel20.setText("Danh sách sản phẩm");
+
+        javax.swing.GroupLayout foodAndBeveragePanelLayout = new javax.swing.GroupLayout(foodAndBeveragePanel);
+        foodAndBeveragePanel.setLayout(foodAndBeveragePanelLayout);
+        foodAndBeveragePanelLayout.setHorizontalGroup(
+            foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19)
+                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(editCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(27, 27, 27))
+        );
+        foodAndBeveragePanelLayout.setVerticalGroup(
+            foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, foodAndBeveragePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 180, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
+                                .addComponent(addCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(editCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane6))))
+                .addContainerGap())
+        );
+
+        TabbedPane.addTab("Thức ăn / Đồ uống", foodAndBeveragePanel);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cập nhật số lượng bàn"));
 
@@ -711,10 +864,9 @@ public class Main extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane7)
-                    .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(500, Short.MAX_VALUE))
         );
         settingPanelLayout.setVerticalGroup(
@@ -731,146 +883,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(43, 43, 43))
         );
 
-        jTabbedPane1.addTab("Thiết lập", settingPanel);
-
-        productTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        productTable.setName("foodCategoryTable"); // NOI18N
-        jScrollPane1.setViewportView(productTable);
-
-        jScrollPane6.setViewportView(categoryList);
-
-        editCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
-        editCategoryButton.setToolTipText("Chỉnh sửa loại sản phẩm");
-        editCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        editCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        editCategoryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editCategoryButtonActionPerformed(evt);
-            }
-        });
-
-        addCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Add\\Add_48x48.png")); // NOI18N
-        addCategoryButton.setToolTipText("Thêm loại sản phẩm");
-        addCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        addCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        addCategoryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCategoryButtonActionPerformed(evt);
-            }
-        });
-
-        deleteCategoryButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
-        deleteCategoryButton.setToolTipText("Xóa loại sản phẩm");
-        deleteCategoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        deleteCategoryButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        deleteCategoryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteCategoryButtonActionPerformed(evt);
-            }
-        });
-
-        deleteProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Delete\\Delete_48x48.png")); // NOI18N
-        deleteProductButton.setToolTipText("Xóa thông tin sản phẩm");
-        deleteProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        deleteProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        deleteProductButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteProductButtonActionPerformed(evt);
-            }
-        });
-
-        editProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Edit\\Edit_48x48.png")); // NOI18N
-        editProductButton.setToolTipText("Chỉnh sửa sản phẩm");
-        editProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        editProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        editProductButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editProductButtonActionPerformed(evt);
-            }
-        });
-
-        addProductButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\Compressed\\must_have_icons_icons_pack_120704\\must_have_icon_set\\Add\\Add_48x48.png")); // NOI18N
-        addProductButton.setToolTipText("Thêm mới sản phẩm");
-        addProductButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        addProductButton.setPreferredSize(new java.awt.Dimension(81, 81));
-        addProductButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addProductButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel19.setText("Loại sản phẩm");
-
-        jLabel20.setText("Danh sách sản phẩm");
-
-        javax.swing.GroupLayout foodAndBeveragePanelLayout = new javax.swing.GroupLayout(foodAndBeveragePanel);
-        foodAndBeveragePanel.setLayout(foodAndBeveragePanelLayout);
-        foodAndBeveragePanelLayout.setHorizontalGroup(
-            foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
-                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(editCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deleteCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(27, 27, 27))
-        );
-        foodAndBeveragePanelLayout.setVerticalGroup(
-            foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, foodAndBeveragePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 180, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(foodAndBeveragePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(foodAndBeveragePanelLayout.createSequentialGroup()
-                                .addComponent(addCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(editCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane6))))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Thức ăn / Đồ uống", foodAndBeveragePanel);
+        TabbedPane.addTab("Thiết lập", settingPanel);
 
         javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
         helpPanel.setLayout(helpPanelLayout);
@@ -883,7 +896,7 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 440, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Hướng dẫn", helpPanel);
+        TabbedPane.addTab("Hướng dẫn", helpPanel);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Coffee Shop Manager 1.0");
@@ -895,7 +908,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(TabbedPane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -907,7 +920,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1190,6 +1203,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane TabbedPane;
     private javax.swing.JButton addCategoryButton;
     private javax.swing.JButton addDiscountButton;
     private javax.swing.JButton addOrUpdateOrder;
@@ -1220,6 +1234,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField drinkNumberTextField;
     private javax.swing.JButton editCategoryButton;
     private javax.swing.JButton editProductButton;
+    private javax.swing.JPanel employeePanel;
     private javax.swing.JButton findButton;
     private javax.swing.JPanel foodAndBeveragePanel;
     private javax.swing.JComboBox<String> foodComboBox;
@@ -1263,7 +1278,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JRadioButton monthRadio;
     private javax.swing.JTextField numberOfTableTextField;
@@ -1294,7 +1308,7 @@ public class Main extends javax.swing.JFrame {
 
     private void initCurrentTables() {
         TableRepository repo = new TableRepository();
-        repo.create(1, 10);
+//        repo.create(1, 10);
 
         currentTableNumberTextField.setText(Integer.toString(repo.count()));
         currentTableIdStartTextField.setText(Integer.toString(repo.getFirstTableId()));
