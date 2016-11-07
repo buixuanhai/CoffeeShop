@@ -1,9 +1,14 @@
 
+import com.xuanhai.models.Ban;
+import com.xuanhai.models.DatBan;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
+import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.ui.Main;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,13 +26,19 @@ public class Program {
     public static void main(String[] args) throws InterruptedException {
 
         new Main().setVisible(true);
-//        EmployeeRepository repo = new EmployeeRepository();
-//        
-//        NhanVien nv = new NhanVien("Hai", new Date(93, 1, 1), new Date(116, 1, 1));
-//        System.out.println(nv.getNgaySinh());
-//        repo.create(nv);
+
+        TableRepository tableRepository = new TableRepository();
+        ProductRepository productRepository = new ProductRepository();
+        OrderedTableRepository orderedTableRepository = new OrderedTableRepository();
+
+        List<DatBan> datBans = orderedTableRepository.getByTableId(1);
+
+        if (datBans != null) {
+            for (DatBan datBan : datBans) {
+                System.out.println(datBan.getSanPham());
+            }
+        }
 //        HibernateUtil.getSessionFactory().close();
-      
     }
 
     public static SanPham getSanPham() {

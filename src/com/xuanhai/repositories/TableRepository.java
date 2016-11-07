@@ -7,13 +7,16 @@ package com.xuanhai.repositories;
 
 import com.xuanhai.models.Ban;
 import com.xuanhai.models.NhanVien;
+import com.xuanhai.models.SanPham;
 import com.xuanhai.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -97,5 +100,36 @@ public class TableRepository {
         s.getTransaction().commit();
 
         return rowsUpdated;
+    }
+
+    public Ban get(int id) {
+
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+
+        List<Ban> tables = s.createCriteria(Ban.class).add(Restrictions.eq("banId", id)).list();
+
+        s.getTransaction().commit();
+
+        if (tables.isEmpty()) {
+            return null;
+        } else {
+            return tables.get(0);
+        }
+    }
+    
+    public int update(Ban ban) {
+        try {
+            Session s = HibernateUtil.getSessionFactory().openSession();
+            s.beginTransaction();
+            ban.setUpdateDate(new java.util.Date());
+            s.update(ban);
+            s.getTransaction().commit();
+
+            return ban.getBanId();
+        } catch (HibernateException e) {
+            return -1;
+        }
+
     }
 }

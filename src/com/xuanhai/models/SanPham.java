@@ -2,6 +2,9 @@ package com.xuanhai.models;
 // Generated Oct 11, 2016 5:24:08 PM by Hibernate Tools 4.3.1
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,6 +28,8 @@ public class SanPham implements java.io.Serializable {
     private BigDecimal donGia;
     private Integer soLuong;
     private LoaiSanPham loaiSanPham;
+
+    private Set<DatBan> datBans = new HashSet<>();
 
     public SanPham() {
     }
@@ -81,6 +87,15 @@ public class SanPham implements java.io.Serializable {
 
     public void setLoaiSanPham(LoaiSanPham loaiSanPham) {
         this.loaiSanPham = loaiSanPham;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "sanPham")
+    public Set<DatBan> getDatBans() {
+        return datBans;
+    }
+
+    public void setDatBans(Set<DatBan> datBans) {
+        this.datBans = datBans;
     }
 
     @Override

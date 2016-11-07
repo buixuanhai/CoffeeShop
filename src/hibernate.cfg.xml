@@ -49,13 +49,14 @@ Contributor(s):
         <property name="hibernate.connection.password"/>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.transaction.auto_close_session">true</property>
-        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <mapping class="com.xuanhai.models.LoaiSanPham"/>
         <mapping class="com.xuanhai.models.SanPham"/>
         <mapping class="com.xuanhai.models.NhanVien"/>
         <mapping class="com.xuanhai.models.Ban"/>
         <mapping class="com.xuanhai.models.GiamGia"/>
+        <mapping class="com.xuanhai.models.DatBan"/>
 
         <!--<mapping resource="com/xuanhai/models/LoaiSanPham.hbm.xml"/>-->
         <!--<mapping resource="com/xuanhai/models/SanPham.hbm.xml"/>-->
