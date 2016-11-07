@@ -326,20 +326,8 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="foodComboBox">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="6">
-                        <StringItem index="0" value="Ch&#x1ecd;n &#x111;&#x1ed3; &#x103;n"/>
-                        <StringItem index="1" value="Khoai chi&#xea;n"/>
-                        <StringItem index="2" value="Ph&#x1ed3;ng t&#xf4;m"/>
-                        <StringItem index="3" value="Hamburger"/>
-                        <StringItem index="4" value="&#xd4; mai"/>
-                        <StringItem index="5" value="H&#x1ea1;t d&#x1ebb;"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;SanPham&gt;"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
@@ -352,23 +340,8 @@
                 <Component class="javax.swing.JTextField" name="drinkNumberTextField">
                 </Component>
                 <Component class="javax.swing.JComboBox" name="drinkComboBox">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="9">
-                        <StringItem index="0" value="Ch&#x1ecd;n th&#x1ee9;c u&#x1ed1;ng "/>
-                        <StringItem index="1" value="Cafe &#x111;en"/>
-                        <StringItem index="2" value="Cafe s&#x1eef;a"/>
-                        <StringItem index="3" value="Lavie"/>
-                        <StringItem index="4" value="Sting"/>
-                        <StringItem index="5" value="Revive"/>
-                        <StringItem index="6" value="Cola"/>
-                        <StringItem index="7" value="Pepsi"/>
-                        <StringItem index="8" value="Tr&#xe0; chanh"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;SanPham&gt;"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">

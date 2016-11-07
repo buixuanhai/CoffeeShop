@@ -18,7 +18,9 @@ import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
 import com.xuanhai.viewmodels.DiscountListModel;
+import com.xuanhai.viewmodels.DrinkComboBoxModel;
 import com.xuanhai.viewmodels.EmployeeTableModel;
+import com.xuanhai.viewmodels.FoodComboBoxModel;
 import com.xuanhai.viewmodels.OrderedTablesComboBoxModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.math.BigDecimal;
@@ -361,11 +363,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel8.setText("Số lượng");
 
-        foodComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn đồ ăn", "Khoai chiên", "Phồng tôm", "Hamburger", "Ô mai", "Hạt dẻ" }));
-
         jLabel6.setText("Đồ ăn");
-
-        drinkComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn thức uống ", "Cafe đen", "Cafe sữa", "Lavie", "Sting", "Revive", "Cola", "Pepsi", "Trà chanh" }));
 
         jLabel7.setText("Số lượng");
 
@@ -1661,7 +1659,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> discountComboBox;
     private javax.swing.JList<GiamGia> discountList;
     private javax.swing.JTextField discountPercentTextField;
-    private javax.swing.JComboBox<String> drinkComboBox;
+    private javax.swing.JComboBox<SanPham> drinkComboBox;
     private javax.swing.JTextField drinkNumberTextField;
     private javax.swing.JButton editCategoryButton;
     private javax.swing.JButton editEmployeeButton;
@@ -1673,7 +1671,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable employeesTable;
     private javax.swing.JButton findButton;
     private javax.swing.JPanel foodAndBeveragePanel;
-    private javax.swing.JComboBox<String> foodComboBox;
+    private javax.swing.JComboBox<SanPham> foodComboBox;
     private javax.swing.JTextField foodNumberTextField;
     private javax.swing.JPanel helpPanel;
     private javax.swing.JPanel homePanel;
@@ -1759,6 +1757,29 @@ public class Main extends javax.swing.JFrame {
         emptyTables = emptyTablesList.toArray(emptyTables);
         OrderedTablesComboBoxModel orderedTablesComboBoxModel = new OrderedTablesComboBoxModel(emptyTables);
         checkoutTableIdComboBox.setModel(orderedTablesComboBoxModel);
+
+        // Food combobox
+        List<SanPham> products = productRepo.get();
+
+        List<SanPham> foodList = products.stream()
+                .filter(p -> p.getLoaiSanPham().getTenLoaiSanPham().equals("Đồ ăn"))
+                .collect(Collectors.toList());
+
+        SanPham[] food = new SanPham[foodList.size()];
+        food = foodList.toArray(food);
+        FoodComboBoxModel foodComboBoxModel = new FoodComboBoxModel(food);
+        foodComboBox.setModel(foodComboBoxModel);
+
+        // Food combobox
+        List<SanPham> drinkList = products.stream()
+                .filter(p -> p.getLoaiSanPham().getTenLoaiSanPham().equals("Thức uống"))
+                .collect(Collectors.toList());
+
+        SanPham[] drink = new SanPham[foodList.size()];
+        food = drinkList.toArray(drink);
+        DrinkComboBoxModel drinkComboBoxModel = new DrinkComboBoxModel(drink);
+        drinkComboBox.setModel(drinkComboBoxModel);
+
     }
 
 }

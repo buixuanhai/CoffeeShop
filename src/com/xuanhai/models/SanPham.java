@@ -85,7 +85,7 @@ public class SanPham implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "SanPham{" + "sanPhamId=" + sanPhamId + ", tenSanPham=" + tenSanPham + ", donGia=" + donGia + ", soLuong=" + soLuong + ", loaiSanPham=" + loaiSanPham + '}';
+        return tenSanPham;
     }
 
 }
