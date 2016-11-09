@@ -19,10 +19,12 @@ import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
+import com.xuanhai.viewmodels.DiscountComboBoxModel;
 import com.xuanhai.viewmodels.DiscountListModel;
 import com.xuanhai.viewmodels.DrinkComboBoxModel;
 import com.xuanhai.viewmodels.EmployeeTableModel;
 import com.xuanhai.viewmodels.FoodComboBoxModel;
+import com.xuanhai.viewmodels.OrderedTableTableModel;
 import com.xuanhai.viewmodels.OrderedTablesComboBoxModel;
 import com.xuanhai.viewmodels.ProductTableModel;
 import java.math.BigDecimal;
@@ -36,6 +38,8 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import com.xuanhai.viewmodels.TablesComboBoxModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -59,6 +63,16 @@ public class Main extends javax.swing.JFrame {
 
     private int editingEmployeeId = 0;
 
+    private String loggedUser;
+
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(String loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
     /**
      * Creates new form NewJFrame
      */
@@ -67,6 +81,11 @@ public class Main extends javax.swing.JFrame {
         setResizable(false);
         seed();
         initUIs();
+    }
+
+    public Main(String loggedUser) {
+        this();
+        this.loggedUser = loggedUser;
     }
 
     private void initUIs() {
@@ -82,6 +101,10 @@ public class Main extends javax.swing.JFrame {
 
         // Tables
         tableRepo.create(1, 10);
+
+        // Employees
+        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "buixuanhai", "123456"));
+        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
 
         // Discounts
         for (int i = 0; i < 3; i++) {
@@ -121,6 +144,7 @@ public class Main extends javax.swing.JFrame {
     private void initProductTable() {
         productTable.setModel(new ProductTableModel());
         productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         productTable.getSelectionModel().addListSelectionListener(e -> {
             editProductButton.setVisible(true);
             deleteProductButton.setVisible(true);
@@ -141,6 +165,8 @@ public class Main extends javax.swing.JFrame {
         employeeNameTextField.setText("");
         employeeBirthdayTextField.setText("");
         employeeHiredDateTextField.setText("");
+        employeePasswordTextField.setText("");
+        employeeUsernameTextField.setText("");
         employeesTable.setModel(new EmployeeTableModel());
         employeesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -215,6 +241,9 @@ public class Main extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         addOrUpdateDrink = new javax.swing.JButton();
         addOrUpdateFood = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableDetailTable = new javax.swing.JTable();
+        deleteOrderedRowButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         discountComboBox = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
@@ -223,10 +252,6 @@ public class Main extends javax.swing.JFrame {
         checkoutTableIdComboBox = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         totalFreeLabel = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableDetailTable = new javax.swing.JTable();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         tablesOverviewTable = new javax.swing.JTable();
         billPanel = new javax.swing.JPanel();
@@ -260,6 +285,10 @@ public class Main extends javax.swing.JFrame {
         addEmployeeButton = new javax.swing.JButton();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        employeeUsernameTextField = new javax.swing.JTextField();
+        employeePasswordTextField = new javax.swing.JPasswordField();
         jLabel32 = new javax.swing.JLabel();
         deleteEmployeeButton = new javax.swing.JButton();
         editEmployeeButton = new javax.swing.JButton();
@@ -404,6 +433,26 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        tableDetailTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tableDetailTable);
+
+        deleteOrderedRowButton.setText("Xóa");
+        deleteOrderedRowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteOrderedRowButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout orderPanelLayout = new javax.swing.GroupLayout(orderPanel);
         orderPanel.setLayout(orderPanelLayout);
         orderPanelLayout.setHorizontalGroup(
@@ -423,21 +472,24 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(orderTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(drinkComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(orderPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(drinkQuantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(orderPanelLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(foodQuantityTextField)))
-                .addGap(18, 18, 18)
-                .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addOrUpdateDrink)
-                    .addComponent(addOrUpdateFood))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(foodQuantityTextField))
+                    .addGroup(orderPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(drinkQuantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addOrUpdateDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addOrUpdateFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteOrderedRowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane3)
+                .addContainerGap())
         );
         orderPanelLayout.setVerticalGroup(
             orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +497,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(orderTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orderTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteOrderedRowButton))
                 .addGap(18, 18, 18)
                 .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -460,12 +513,14 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(foodQuantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addOrUpdateFood))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thanh toán"));
-
-        discountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không giảm giá", "10%", "20%" }));
 
         jLabel10.setText("Giảm giá");
 
@@ -483,63 +538,6 @@ public class Main extends javax.swing.JFrame {
         totalFreeLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         totalFreeLabel.setForeground(new java.awt.Color(255, 0, 51));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(40, 40, 40)
-                        .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(discountComboBox, 0, 131, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(checkoutButton)
-                    .addComponent(jLabel11)
-                    .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-
-        tableDetailTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tableDetailTable);
-
-        jLabel33.setText("Thông tin bàn 1");
-
-        jLabel34.setText("Các bàn đang dùng");
-
         tablesOverviewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -553,52 +551,71 @@ public class Main extends javax.swing.JFrame {
         ));
         jScrollPane8.setViewportView(tablesOverviewTable);
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(40, 40, 40)
+                        .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(checkoutButton))
+                .addContainerGap(104, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel34)
-                        .addGap(197, 197, 197))
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(218, 218, 218)
-                                .addComponent(jLabel33))
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(orderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel33)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(orderPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel34)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 78, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Trang chính", homePanel);
@@ -779,24 +796,32 @@ public class Main extends javax.swing.JFrame {
 
         jLabel31.setText("dd/mm/yyyy");
 
+        jLabel33.setText("Tài khoản");
+
+        jLabel34.setText("Mật khẩu");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addEmployeeButton)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(employeeNameTextField)
-                            .addComponent(employeeBirthdayTextField)
-                            .addComponent(employeeHiredDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(employeePasswordTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(employeeUsernameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(employeeNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(employeeBirthdayTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(employeeHiredDateTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel30)
@@ -820,6 +845,14 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel29)
                     .addComponent(employeeHiredDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(employeeUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(employeePasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(addEmployeeButton)
                 .addContainerGap())
@@ -877,13 +910,13 @@ public class Main extends javax.swing.JFrame {
             .addGroup(employeePanelLayout.createSequentialGroup()
                 .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(employeePanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(employeePanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(employeePanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(editEmployeeButton)
@@ -1236,7 +1269,7 @@ public class Main extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(311, 311, 311)))
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1271,8 +1304,8 @@ public class Main extends javax.swing.JFrame {
         }
 
         orderedTableRepo.createOrUpdate(new DatBan(drinkQuantity, (SanPham) drinkComboBox.getSelectedItem(), (Ban) orderTableIdComboBox.getSelectedItem()));
-
-        drinkComboBox.setSelectedIndex(0);
+        initOrderingTable();
+        initOrderedTable();
         drinkQuantityTextField.setText("");
     }//GEN-LAST:event_addOrUpdateDrinkActionPerformed
 
@@ -1309,6 +1342,7 @@ public class Main extends javax.swing.JFrame {
                 categoryRepo.create(new LoaiSanPham(name));
                 JOptionPane.showMessageDialog(this, "Tạo thành công loại sản phẩm mới");
                 initCategoryListBox();
+                initTableOrderTab();
                 disableCategoryButtons();
             } catch (Exception e) {
 //                JOptionPane.showMessageDialog(this, "Lỗi khi thêm loại sản phẩm. ");
@@ -1322,6 +1356,7 @@ public class Main extends javax.swing.JFrame {
     private void editCategoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCategoryButtonActionPerformed
         editCategory();
         initProductTable();
+        initTableOrderTab();
     }//GEN-LAST:event_editCategoryButtonActionPerformed
 
     private void editCategory() {
@@ -1358,6 +1393,7 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
                 initCategoryListBox();
                 initProductTable();
+                initTableOrderTab();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
@@ -1384,6 +1420,7 @@ public class Main extends javax.swing.JFrame {
 
                 productRepo.create(sp);
                 initProductTable();
+                initTableOrderTab();
 
                 Utilities.Log(Level.INFO, sp.toString());
             } catch (Exception e) {
@@ -1405,6 +1442,7 @@ public class Main extends javax.swing.JFrame {
         p.getNameTextField().setText(sp.getTenSanPham());
         p.getPriceTextField().setText(sp.getDonGia().toString());
         p.getQuantityTextField().setText(sp.getSoLuong().toString());
+
         p.getCategoryComboBox().setSelectedItem(sp.getLoaiSanPham());
 
         int result = JOptionPane.showConfirmDialog(this, p, "Cập nhật thông tin sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -1422,6 +1460,7 @@ public class Main extends javax.swing.JFrame {
 
                 productRepo.update(sp);
                 initProductTable();
+                initTableOrderTab();
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Dữ liệu thiếu hoặc không đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -1442,6 +1481,7 @@ public class Main extends javax.swing.JFrame {
                 productRepo.delete(sp.getSanPhamId());
             }
             initProductTable();
+            initTableOrderTab();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
         }
@@ -1480,6 +1520,7 @@ public class Main extends javax.swing.JFrame {
 
             discountRepo.create(new GiamGia(percent));
             initDiscountList();
+            initDiscountComboBox();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Thông tin thiếu hoặc sai định dạng", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -1500,6 +1541,7 @@ public class Main extends javax.swing.JFrame {
             try {
                 discountRepo.delete(giamGia.getGiamGiaId());
                 initDiscountList();
+                initDiscountComboBox();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi xóa giảm giá", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
@@ -1513,12 +1555,18 @@ public class Main extends javax.swing.JFrame {
         String name = employeeNameTextField.getText();
         String birthdayText = employeeBirthdayTextField.getText();
         String hiredDateText = employeeHiredDateTextField.getText();
+        String username = employeeUsernameTextField.getText();
+        String password = employeePasswordTextField.getText();
+
         Date birthday = null;
         Date hiredDay = null;
 
-        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()) {
+        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()
+                || username == null || username.isEmpty() || password == null || password.isEmpty()) {
+
             JOptionPane.showMessageDialog(this, "Thiếu thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
+
         }
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
@@ -1534,7 +1582,7 @@ public class Main extends javax.swing.JFrame {
         }
 
         try {
-            employeeRepo.create(new NhanVien(name, birthday, hiredDay));
+            employeeRepo.create(new NhanVien(name, birthday, hiredDay, username, password));
             initEmployeeTab();
             JOptionPane.showMessageDialog(this, "Thêm mới nhan viên thành công");
 
@@ -1561,6 +1609,8 @@ public class Main extends javax.swing.JFrame {
             employeeNameTextField.setText(nhanVien.getHoTen());
             employeeBirthdayTextField.setText(df.format(nhanVien.getNgaySinh()));
             employeeHiredDateTextField.setText(df.format(nhanVien.getNgayVaoLam()));
+            employeeUsernameTextField.setText(nhanVien.getUsername());
+            employeePasswordTextField.setText(nhanVien.getPassword());
             editingEmployeeId = id;
         }
 
@@ -1575,14 +1625,19 @@ public class Main extends javax.swing.JFrame {
         String name = employeeNameTextField.getText();
         String birthdayText = employeeBirthdayTextField.getText();
         String hiredDateText = employeeHiredDateTextField.getText();
+        String username = employeeUsernameTextField.getText();
+        String password = employeePasswordTextField.getText();
+
         Date birthday = null;
         Date hiredDay = null;
 
-        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()) {
+        if (name == null || name.isEmpty() || birthdayText == null || birthdayText.isEmpty() || hiredDateText == null || hiredDateText.isEmpty()
+                || username == null || username.isEmpty() || password == null || password.isEmpty()) {
+
             JOptionPane.showMessageDialog(this, "Thiếu thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
-        }
 
+        }
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 
         try {
@@ -1600,6 +1655,8 @@ public class Main extends javax.swing.JFrame {
             nhanVien.setHoTen(name);
             nhanVien.setNgaySinh(hiredDay);
             nhanVien.setNgayVaoLam(hiredDay);
+            nhanVien.setUsername(username);
+            nhanVien.setPassword(password);
 
             try {
                 employeeRepo.update(nhanVien);
@@ -1663,15 +1720,34 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin số lượng đồ không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
-        foodComboBox.setSelectedIndex(0);
         foodQuantityTextField.setText("");
 
-        System.out.println(orderTableIdComboBox.getSelectedItem());
-        System.out.println(foodComboBox.getSelectedItem());
-        System.out.println(foodQuantityText);
-
         orderedTableRepo.createOrUpdate(new DatBan(foodQuantity, (SanPham) foodComboBox.getSelectedItem(), (Ban) orderTableIdComboBox.getSelectedItem()));
+        initOrderingTable();
+        initOrderedTable();
+
     }//GEN-LAST:event_addOrUpdateFoodActionPerformed
+
+    private void deleteOrderedRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrderedRowButtonActionPerformed
+        // TODO add your handling code here:
+
+        int selectedRow = tableDetailTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn đối tượng để xóa");
+            return;
+        }
+
+        int result = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa", "Xóa", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            SanPham sp = (SanPham) tableDetailTable.getValueAt(selectedRow, 0);
+
+            orderedTableRepo.createOrUpdate(new DatBan(0, sp, (Ban) orderTableIdComboBox.getSelectedItem()));
+
+            initTableOrderTab();
+        }
+    }//GEN-LAST:event_deleteOrderedRowButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1736,8 +1812,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton deleteCategoryButton;
     private javax.swing.JButton deleteDiscountButton;
     private javax.swing.JButton deleteEmployeeButton;
+    private javax.swing.JButton deleteOrderedRowButton;
     private javax.swing.JButton deleteProductButton;
-    private javax.swing.JComboBox<String> discountComboBox;
+    private javax.swing.JComboBox<GiamGia> discountComboBox;
     private javax.swing.JList<GiamGia> discountList;
     private javax.swing.JTextField discountPercentTextField;
     private javax.swing.JComboBox<SanPham> drinkComboBox;
@@ -1749,6 +1826,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField employeeHiredDateTextField;
     private javax.swing.JTextField employeeNameTextField;
     private javax.swing.JPanel employeePanel;
+    private javax.swing.JPasswordField employeePasswordTextField;
+    private javax.swing.JTextField employeeUsernameTextField;
     private javax.swing.JTable employeesTable;
     private javax.swing.JButton findButton;
     private javax.swing.JPanel foodAndBeveragePanel;
@@ -1824,26 +1903,33 @@ public class Main extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initTableOrderTab() {
-        // List of all tables
-        List<Ban> tablesList = tableRepo.get();
-        Ban[] tables = new Ban[tablesList.size()];
+        initOrderComboBox();
 
-        tables = tablesList.toArray(tables);
-        TablesComboBoxModel tableComboBoxModel = new TablesComboBoxModel(tables);
+        initOrderedTable();
 
-        orderTableIdComboBox.setModel(tableComboBoxModel);
+        initFoodComboBox();
 
-        // List of ordered tables
-        List<Ban> emptyTablesList = tablesList.stream()
-                .filter(t -> !t.getConTrong())
+        initDrinkComboBox();
+
+        initOrderingTable();
+
+        initDiscountComboBox();
+
+    }
+
+    public void initDrinkComboBox() {
+        List<SanPham> products = productRepo.get();
+        List<SanPham> drinkList = products.stream()
+                .filter(p -> p.getLoaiSanPham().getTenLoaiSanPham().equals("Thức uống"))
                 .collect(Collectors.toList());
 
-        Ban[] emptyTables = new Ban[emptyTablesList.size()];
-        emptyTables = emptyTablesList.toArray(emptyTables);
-        OrderedTablesComboBoxModel orderedTablesComboBoxModel = new OrderedTablesComboBoxModel(emptyTables);
-        checkoutTableIdComboBox.setModel(orderedTablesComboBoxModel);
+        SanPham[] drink = new SanPham[drinkList.size()];
+        drink = drinkList.toArray(drink);
+        DrinkComboBoxModel drinkComboBoxModel = new DrinkComboBoxModel(drink);
+        drinkComboBox.setModel(drinkComboBoxModel);
+    }
 
-        // Food combobox
+    public void initFoodComboBox() {
         List<SanPham> products = productRepo.get();
 
         List<SanPham> foodList = products.stream()
@@ -1854,16 +1940,54 @@ public class Main extends javax.swing.JFrame {
         food = foodList.toArray(food);
         FoodComboBoxModel foodComboBoxModel = new FoodComboBoxModel(food);
         foodComboBox.setModel(foodComboBoxModel);
+    }
 
-        // Drink combobox
-        List<SanPham> drinkList = products.stream()
-                .filter(p -> p.getLoaiSanPham().getTenLoaiSanPham().equals("Thức uống"))
+    public void initOrderComboBox() {
+        // List of all tables
+        List<Ban> tablesList = tableRepo.get();
+        Ban[] tables = new Ban[tablesList.size()];
+
+        tables = tablesList.toArray(tables);
+        TablesComboBoxModel tableComboBoxModel = new TablesComboBoxModel(tables);
+
+        orderTableIdComboBox.setModel(tableComboBoxModel);
+        orderTableIdComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                initOrderingTable();
+            }
+        });
+    }
+
+    public void initOrderedTable() {
+        // List of ordered tables
+        List<Ban> tablesList = tableRepo.get();
+        List<Ban> emptyTablesList = tablesList.stream()
+                .filter(t -> !t.getConTrong())
                 .collect(Collectors.toList());
 
-        SanPham[] drink = new SanPham[foodList.size()];
-        drink = drinkList.toArray(drink);
-        DrinkComboBoxModel drinkComboBoxModel = new DrinkComboBoxModel(drink);
-        drinkComboBox.setModel(drinkComboBoxModel);
+        Ban[] emptyTables = new Ban[emptyTablesList.size()];
+        emptyTables = emptyTablesList.toArray(emptyTables);
+        OrderedTablesComboBoxModel orderedTablesComboBoxModel = new OrderedTablesComboBoxModel(emptyTables);
+        checkoutTableIdComboBox.setModel(orderedTablesComboBoxModel);
+    }
+
+    private void initOrderingTable() {
+
+        Ban b = (Ban) orderTableIdComboBox.getSelectedItem();
+        OrderedTableTableModel model = new OrderedTableTableModel(b.getBanId());
+        tableDetailTable.setModel(model);
+        tableDetailTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+    }
+
+    private void initDiscountComboBox() {
+
+        List<GiamGia> discountList = discountRepo.get();
+        GiamGia[] discounts = new GiamGia[discountList.size()];
+        discounts = discountList.toArray(discounts);
+        DiscountComboBoxModel discountComboBoxModel = new DiscountComboBoxModel(discounts);
+        discountComboBox.setModel(discountComboBoxModel);
 
     }
 

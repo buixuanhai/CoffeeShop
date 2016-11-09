@@ -20,11 +20,12 @@ import org.hibernate.criterion.Restrictions;
  */
 public class OrderedTableRepository {
 
+    TableRepository tableRepo = new TableRepository();
+
     public List<DatBan> getByTableId(int id) {
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
 
-        TableRepository tableRepo = new TableRepository();
         Ban ban = tableRepo.get(id);
 
         if (ban != null) {
@@ -51,6 +52,11 @@ public class OrderedTableRepository {
         Ban ban = datBan.getBan();
 
         if (ban.getConTrong()) {
+
+            if (datBan.getSoLuong() == 0) {
+                return -1;
+            }
+
             Session s = HibernateUtil.getSessionFactory().openSession();
             s.beginTransaction();
             int id = (int) s.save(datBan);
@@ -72,12 +78,25 @@ public class OrderedTableRepository {
              */
             for (DatBan db : datBans) {
                 if (db.getSanPham().getTenSanPham().equals(sanPham.getTenSanPham())) {
+
                     db.setSoLuong(datBan.getSoLuong());
 
                     Session s = HibernateUtil.getSessionFactory().openSession();
                     s.beginTransaction();
-                    s.update(db);
+
+                    if (db.getSoLuong() == 0) {
+                        s.delete(db);
+
+                    } else {
+                        s.update(db);
+                    }
+
                     s.getTransaction().commit();
+
+                    if (getByTableId(datBan.getBan().getBanId()) == null) {
+                        ban.setConTrong(true);
+                        tableRepo.update(ban);
+                    }
 
                     return db.getDatBanId();
                 }

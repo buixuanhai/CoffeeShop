@@ -6,7 +6,9 @@
 package com.xuanhai.ui;
 
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -143,14 +145,24 @@ public class EditProductPanel extends javax.swing.JPanel {
     private void initComboBox() {
         CategoryRepository repo = new CategoryRepository();
 
-        categoryComboBox.setModel(new CategoryComboBoxModel(new Vector<>(repo.get())));
+        List<LoaiSanPham> categoryList = repo.get();
+        LoaiSanPham[] categories = new LoaiSanPham[categoryList.size()];
+        categories = categoryList.toArray(categories);
+
+        categoryComboBox.setModel(new ProductCategoryComboBoxModel(categories));
     }
 
-    class CategoryComboBoxModel extends DefaultComboBoxModel<LoaiSanPham> {
+    class ProductCategoryComboBoxModel extends DefaultComboBoxModel<LoaiSanPham> {
 
-        public CategoryComboBoxModel(Vector<LoaiSanPham> v) {
-            super(v);
+        public ProductCategoryComboBoxModel(LoaiSanPham[] items) {
+            super(items);
+        }
+
+        @Override
+        public LoaiSanPham getSelectedItem() {
+            return (LoaiSanPham) super.getSelectedItem(); //To change body of generated methods, choose Tools | Templates.
         }
 
     }
+
 }

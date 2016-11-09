@@ -4,6 +4,7 @@ package com.xuanhai.models;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -68,4 +69,35 @@ public class LoaiSanPham implements java.io.Serializable {
         return tenLoaiSanPham;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.loaiSanPhamId);
+        hash = 71 * hash + Objects.hashCode(this.tenLoaiSanPham);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LoaiSanPham other = (LoaiSanPham) obj;
+        if (!Objects.equals(this.tenLoaiSanPham, other.tenLoaiSanPham)) {
+            return false;
+        }
+        if (!Objects.equals(this.loaiSanPhamId, other.loaiSanPhamId)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
 }

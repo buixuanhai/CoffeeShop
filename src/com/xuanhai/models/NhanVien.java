@@ -22,14 +22,18 @@ public class NhanVien implements java.io.Serializable {
     private String hoTen;
     private Date ngaySinh;
     private Date ngayVaoLam;
+    private String username;
+    private String password;
 
     public NhanVien() {
     }
 
-    public NhanVien(String hoTen, Date ngaySinh, Date ngayVaoLam) {
+    public NhanVien(String hoTen, Date ngaySinh, Date ngayVaoLam, String username, String password) {
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
         this.ngayVaoLam = ngayVaoLam;
+        this.username = username;
+        this.password = password;
     }
 
     @Id
@@ -70,6 +74,24 @@ public class NhanVien implements java.io.Serializable {
 
     public void setNgayVaoLam(Date ngayVaoLam) {
         this.ngayVaoLam = ngayVaoLam;
+    }
+
+    @Column(name = "username", nullable = false)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Column(name = "password", nullable = false)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
