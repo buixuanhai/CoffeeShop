@@ -41,6 +41,21 @@ public class EmployeeRepository implements IRepository<NhanVien> {
             return employees.get(0);
         }
     }
+    
+    public NhanVien getByUsername(String username) {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+
+        List<NhanVien> employees = s.createCriteria(NhanVien.class).add(Restrictions.eq("username", username)).list();
+
+        s.getTransaction().commit();
+
+        if (employees.isEmpty()) {
+            return null;
+        } else {
+            return employees.get(0);
+        }
+    }
 
     @Override
     public int create(NhanVien object) {

@@ -7,6 +7,7 @@ import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
+import com.xuanhai.ui.Login;
 import com.xuanhai.ui.Main;
 import java.util.List;
 
@@ -24,20 +25,22 @@ public class Program {
     private static final CategoryRepository repo = new CategoryRepository();
 
     public static void main(String[] args) throws InterruptedException {
+        
+        new Login().setVisible(true);
 
-        new Main().setVisible(true);
+//        new Main().setVisible(true);
 
-        TableRepository tableRepository = new TableRepository();
-        ProductRepository productRepository = new ProductRepository();
-        OrderedTableRepository orderedTableRepository = new OrderedTableRepository();
-
-        List<DatBan> datBans = orderedTableRepository.getByTableId(1);
-
-        if (datBans != null) {
-            for (DatBan datBan : datBans) {
-                System.out.println(datBan.getSanPham());
-            }
-        }
+//        TableRepository tableRepository = new TableRepository();
+//        ProductRepository productRepository = new ProductRepository();
+//        OrderedTableRepository orderedTableRepository = new OrderedTableRepository();
+//
+//        List<DatBan> datBans = orderedTableRepository.getByTableId(1);
+//
+//        if (datBans != null) {
+//            for (DatBan datBan : datBans) {
+//                System.out.println(datBan.getSanPham());
+//            }
+//        }
 //        HibernateUtil.getSessionFactory().close();
     }
 

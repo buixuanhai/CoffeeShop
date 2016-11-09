@@ -40,7 +40,6 @@ import javax.swing.ListSelectionModel;
 import com.xuanhai.viewmodels.TablesComboBoxModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -63,13 +62,13 @@ public class Main extends javax.swing.JFrame {
 
     private int editingEmployeeId = 0;
 
-    private String loggedUser;
+    private NhanVien loggedUser;
 
-    public String getLoggedUser() {
+    public NhanVien getLoggedUser() {
         return loggedUser;
     }
 
-    public void setLoggedUser(String loggedUser) {
+    public void setLoggedUser(NhanVien loggedUser) {
         this.loggedUser = loggedUser;
     }
 
@@ -79,13 +78,19 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setResizable(false);
-        seed();
+//        seed();
         initUIs();
     }
 
-    public Main(String loggedUser) {
+    public Main(NhanVien loggedUser) {
         this();
         this.loggedUser = loggedUser;
+        if (!loggedUser.getUsername().equals("admin")) {
+            TabbedPane.removeTabAt(3);
+            TabbedPane.removeTabAt(3);
+            TabbedPane.removeTabAt(3);
+
+        }
     }
 
     private void initUIs() {
@@ -103,9 +108,8 @@ public class Main extends javax.swing.JFrame {
         tableRepo.create(1, 10);
 
         // Employees
-        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "buixuanhai", "123456"));
-        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
-
+//        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "buixuanhai", "123456"));
+//        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
         // Discounts
         for (int i = 0; i < 3; i++) {
             discountRepo.create(new GiamGia((i + 1) * 10));
