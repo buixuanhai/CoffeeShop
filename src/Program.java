@@ -31,15 +31,12 @@ public class Program {
     private static final TableRepository tableRepo = new TableRepository();
 
     public static void main(String[] args) throws InterruptedException {
-
 //        new Login().setVisible(true);
-        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "admin", "123456"));
-        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 
-//         Test hoa don
-//        tableRepo.create(1, 10);
-//        ReceiptRepository receiptRepository = new ReceiptRepository();
-//        receiptRepository.create(new HoaDon(new BigDecimal(100000), 0, tableRepo.get(1), employeeRepo.get(1)));
+        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(93, 1, 9), new java.util.Date(), "admin", "123456"));
+        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(93, 1, 9), new java.util.Date(), "hoangnam", "123456"));
+
+        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 //        HibernateUtil.getSessionFactory().close();
     }
 

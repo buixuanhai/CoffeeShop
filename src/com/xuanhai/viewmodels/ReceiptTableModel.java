@@ -28,6 +28,12 @@ public class ReceiptTableModel extends AbstractTableModel {
         model = data.stream().map(e -> new Object[]{e.getHoaDonId(), e.getNgayHoaDon(), e.getGiamGia(), e.getTongTriGia(), e.getBan().getBanId(), e.getNhanVien()}).collect(Collectors.toList());
     }
 
+    public ReceiptTableModel(List<HoaDon> data) {
+        this.data = data;
+        model = data.stream().map(e -> new Object[]{e.getHoaDonId(), e.getNgayHoaDon(), e.getGiamGia(), e.getTongTriGia(), e.getBan().getBanId(), e.getNhanVien()}).collect(Collectors.toList());
+
+    }
+
     @Override
     public int getRowCount() {
         return model.size();

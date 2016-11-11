@@ -44,7 +44,6 @@ import com.xuanhai.viewmodels.TablesComboBoxModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.stream.Collectors;
 
 /**
@@ -107,7 +106,7 @@ public class Main extends javax.swing.JFrame {
         initDiscountList();
         initEmployeeTab();
         initTableOrderTab();
-        initReceiptTab();
+        initReceiptTab(null);
     }
 
     private void seed() {
@@ -117,7 +116,7 @@ public class Main extends javax.swing.JFrame {
 
         // Employees
 //        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "buixuanhai", "123456"));
-        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
+        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(93, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
         // Discounts
         for (int i = 0; i < 4; i++) {
             discountRepo.create(new GiamGia((i) * 10));
@@ -269,8 +268,9 @@ public class Main extends javax.swing.JFrame {
         receiptTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        findButton = new javax.swing.JButton();
-        billIdTextField = new javax.swing.JTextField();
+        receiptFindButton = new javax.swing.JButton();
+        receptIdSearchTextField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         statisticPanel = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         dateRadio = new javax.swing.JRadioButton();
@@ -617,7 +617,12 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setText("Mã hóa đơn");
 
-        findButton.setText("Tìm kiếm");
+        receiptFindButton.setText("Tìm kiếm");
+        receiptFindButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                receiptFindButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -627,9 +632,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(billIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(receptIdSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(receiptFindButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -637,10 +642,12 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(findButton)
-                    .addComponent(billIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(receiptFindButton)
+                    .addComponent(receptIdSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)))
         );
+
+        jLabel3.setText("Chi tiết hóa đơn");
 
         javax.swing.GroupLayout billPanelLayout = new javax.swing.GroupLayout(billPanel);
         billPanel.setLayout(billPanelLayout);
@@ -648,20 +655,22 @@ public class Main extends javax.swing.JFrame {
             billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(billPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addGroup(billPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addComponent(jLabel3)
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         billPanelLayout.setVerticalGroup(
             billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, billPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                 .addGap(28, 28, 28))
         );
 
@@ -1321,10 +1330,8 @@ public class Main extends javax.swing.JFrame {
 
             totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram()) + " VND giảm (" + discount.getPhanTram() + "%)");
 
-            JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
             initTableOrderTab();
-            initReceiptTab();
+            initReceiptTab(null);
 
         }
 
@@ -1495,17 +1502,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteProductButtonActionPerformed
 
     private void updateTableNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTableNumberButtonActionPerformed
+        int result = JOptionPane.showConfirmDialog(this, "Cập nhật lại bàn sẽ xóa tất cả các bàn đang được đặt. Bạn có chắc chắc muốn thực hiện thao tác này?", "Cảnh báo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        TableRepository repo = new TableRepository();
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                int number = Integer.parseInt(numberOfTableTextField.getText());
+                int start = Integer.parseInt(tableStartIdTextField.getText());
+                tableRepo.create(start, number);
+                initTableOrderTab();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi nhập thiếu hoặc sai thông tin ");
 
-        try {
-            int number = Integer.parseInt(numberOfTableTextField.getText());
-            int start = Integer.parseInt(tableStartIdTextField.getText());
-            repo.create(start, number);
-            initTableOrderTab();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Lỗi nhập thiếu hoặc sai thông tin ");
+            }
         }
 
         initCurrentTables();
@@ -1756,6 +1764,29 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteOrderedRowButtonActionPerformed
 
+    private void receiptFindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiptFindButtonActionPerformed
+        // TODO add your handling code here:
+
+        int id = 0;
+        try {
+            id = Integer.parseInt(receptIdSearchTextField.getText());
+        } catch (Exception e) {
+            initReceiptTab(null);
+        }
+
+        List<HoaDon> receipts = new ArrayList<HoaDon>();
+        HoaDon hoaDon = receiptRepository.get(id);
+        if (hoaDon != null) {
+            receipts.add(hoaDon);
+            initReceiptTab(receipts);
+
+        } else {
+            initReceiptTab(null);
+        }
+
+
+    }//GEN-LAST:event_receiptFindButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1800,7 +1831,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton addOrUpdateDrink;
     private javax.swing.JButton addOrUpdateFood;
     private javax.swing.JButton addProductButton;
-    private javax.swing.JTextField billIdTextField;
     private javax.swing.JPanel billPanel;
     private javax.swing.JList<LoaiSanPham> categoryList;
     private javax.swing.JButton checkoutButton;
@@ -1834,7 +1864,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPasswordField employeePasswordTextField;
     private javax.swing.JTextField employeeUsernameTextField;
     private javax.swing.JTable employeesTable;
-    private javax.swing.JButton findButton;
     private javax.swing.JPanel foodAndBeveragePanel;
     private javax.swing.JComboBox<SanPham> foodComboBox;
     private javax.swing.JTextField foodQuantityTextField;
@@ -1861,6 +1890,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1891,7 +1921,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel orderPanel;
     private javax.swing.JComboBox<Ban> orderTableIdComboBox;
     private javax.swing.JTable productTable;
+    private javax.swing.JButton receiptFindButton;
     private javax.swing.JTable receiptTable;
+    private javax.swing.JTextField receptIdSearchTextField;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel statisticPanel;
     private javax.swing.JTable statisticTable;
@@ -1994,8 +2026,13 @@ public class Main extends javax.swing.JFrame {
 
     }
 
-    private void initReceiptTab() {
-        receiptTable.setModel(new ReceiptTableModel());
+    private void initReceiptTab(List<HoaDon> receipts) {
+        if (receipts == null) {
+            receiptTable.setModel(new ReceiptTableModel());
+        } else {
+            receiptTable.setModel(new ReceiptTableModel(receipts));
+
+        }
     }
 
 }
