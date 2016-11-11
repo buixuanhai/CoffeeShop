@@ -30,10 +30,10 @@
                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="usernameTextField" min="-2" pref="158" max="-2" attributes="0"/>
-                  <Component id="passwordTextField" min="-2" pref="158" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="usernameTextField" max="32767" attributes="0"/>
                   <Component id="loginButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="passwordTextField" alignment="0" pref="158" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="42" max="32767" attributes="0"/>
           </Group>
@@ -84,8 +84,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="usernameTextField">
     </Component>
-    <Component class="javax.swing.JTextField" name="passwordTextField">
-    </Component>
     <Component class="javax.swing.JButton" name="loginButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng nh&#x1ead;p"/>
@@ -93,6 +91,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passwordTextField">
     </Component>
   </SubComponents>
 </Form>

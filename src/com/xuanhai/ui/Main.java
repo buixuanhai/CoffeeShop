@@ -78,7 +78,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setResizable(false);
-//        seed();
+        seed();
         initUIs();
     }
 
@@ -109,10 +109,10 @@ public class Main extends javax.swing.JFrame {
 
         // Employees
 //        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "buixuanhai", "123456"));
-//        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
+        employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(1993, 1, 9), new java.util.Date(), "nguyenhoangnam", "123456"));
         // Discounts
-        for (int i = 0; i < 3; i++) {
-            discountRepo.create(new GiamGia((i + 1) * 10));
+        for (int i = 0; i < 4; i++) {
+            discountRepo.create(new GiamGia((i) * 10));
         }
 
         // createOrUpdate categories

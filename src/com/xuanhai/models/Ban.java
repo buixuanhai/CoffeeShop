@@ -33,6 +33,7 @@ public class Ban implements java.io.Serializable {
     private Date updateDate;
 
     private Set<DatBan> datBans = new HashSet<>();
+    private Set<HoaDon> hoaDons = new HashSet<>();
 
     public Ban() {
     }
@@ -92,6 +93,17 @@ public class Ban implements java.io.Serializable {
     public void setDatBans(Set<DatBan> datBans) {
         this.datBans = datBans;
     }
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "ban")
+    public Set<HoaDon> getHoaDons() {
+        return hoaDons;
+    }
+
+    public void setHoaDons(Set<HoaDon> hoaDons) {
+        this.hoaDons = hoaDons;
+    }
+    
+    
 
     @Column(name = "create_date")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

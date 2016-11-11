@@ -2,8 +2,10 @@
 import com.xuanhai.models.Ban;
 import com.xuanhai.models.DatBan;
 import com.xuanhai.models.LoaiSanPham;
+import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
+import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
@@ -22,13 +24,14 @@ import java.util.List;
  */
 public class Program {
 
-    private static final CategoryRepository repo = new CategoryRepository();
+    private static final EmployeeRepository employeeRepo = new EmployeeRepository();
 
     public static void main(String[] args) throws InterruptedException {
-        
-        new Login().setVisible(true);
 
-//        new Main().setVisible(true);
+//        new Login().setVisible(true);
+
+        employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "admin", "123456"));
+        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 
 //        TableRepository tableRepository = new TableRepository();
 //        ProductRepository productRepository = new ProductRepository();
