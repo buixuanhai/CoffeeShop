@@ -34,13 +34,12 @@ public class Program {
 
 //        new Login().setVisible(true);
         employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(1993, 1, 9), new java.util.Date(), "admin", "123456"));
-//        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
+        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 
-        // Test hoa don
+//         Test hoa don
 //        tableRepo.create(1, 10);
 //        ReceiptRepository receiptRepository = new ReceiptRepository();
 //        receiptRepository.create(new HoaDon(new BigDecimal(100000), 0, tableRepo.get(1), employeeRepo.get(1)));
-        
 //        HibernateUtil.getSessionFactory().close();
     }
 

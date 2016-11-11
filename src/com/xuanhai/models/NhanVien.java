@@ -94,4 +94,9 @@ public class NhanVien implements java.io.Serializable {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return hoTen;
+    }
+
 }

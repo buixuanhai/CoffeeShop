@@ -8,6 +8,7 @@ package com.xuanhai.ui;
 import com.xuanhai.models.Ban;
 import com.xuanhai.models.DatBan;
 import com.xuanhai.models.GiamGia;
+import com.xuanhai.models.HoaDon;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
@@ -16,6 +17,7 @@ import com.xuanhai.repositories.DiscountRepository;
 import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
+import com.xuanhai.repositories.ReceiptRepository;
 import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
 import com.xuanhai.viewmodels.CategoryListModel;
@@ -27,6 +29,7 @@ import com.xuanhai.viewmodels.FoodComboBoxModel;
 import com.xuanhai.viewmodels.OrderedTableTableModel;
 import com.xuanhai.viewmodels.OrderedTablesComboBoxModel;
 import com.xuanhai.viewmodels.ProductTableModel;
+import com.xuanhai.viewmodels.ReceiptTableModel;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,6 +43,8 @@ import javax.swing.ListSelectionModel;
 import com.xuanhai.viewmodels.TablesComboBoxModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +64,8 @@ public class Main extends javax.swing.JFrame {
     private final EmployeeRepository employeeRepo = new EmployeeRepository();
 
     private final OrderedTableRepository orderedTableRepo = new OrderedTableRepository();
+
+    private final ReceiptRepository receiptRepository = new ReceiptRepository();
 
     private int editingEmployeeId = 0;
 
@@ -100,6 +107,7 @@ public class Main extends javax.swing.JFrame {
         initDiscountList();
         initEmployeeTab();
         initTableOrderTab();
+        initReceiptTab();
     }
 
     private void seed() {
@@ -254,19 +262,15 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         checkoutButton = new javax.swing.JButton();
         checkoutTableIdComboBox = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
+        totalLabel = new javax.swing.JLabel();
         totalFreeLabel = new javax.swing.JLabel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        tablesOverviewTable = new javax.swing.JTable();
         billPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        billTable = new javax.swing.JTable();
+        receiptTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         findButton = new javax.swing.JButton();
         billIdTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        billDateTextField = new javax.swing.JFormattedTextField();
         statisticPanel = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         dateRadio = new javax.swing.JRadioButton();
@@ -492,7 +496,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(addOrUpdateFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteOrderedRowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                 .addContainerGap())
         );
         orderPanelLayout.setVerticalGroup(
@@ -537,23 +541,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setText("Trị giá hóa đơn");
+        totalLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        totalLabel.setText("Thành tiền");
 
         totalFreeLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         totalFreeLabel.setForeground(new java.awt.Color(255, 0, 51));
-
-        tablesOverviewTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane8.setViewportView(tablesOverviewTable);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -561,24 +553,22 @@ public class Main extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(40, 40, 40)
                         .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(totalLabel)
+                        .addGap(34, 34, 34)
+                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -590,15 +580,12 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(checkoutButton))
-                .addContainerGap(104, Short.MAX_VALUE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(checkoutButton)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(totalLabel)
+                    .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
@@ -607,9 +594,9 @@ public class Main extends javax.swing.JFrame {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(orderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
@@ -624,17 +611,13 @@ public class Main extends javax.swing.JFrame {
 
         TabbedPane.addTab("Trang chính", homePanel);
 
-        jScrollPane2.setViewportView(billTable);
+        jScrollPane2.setViewportView(receiptTable);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm hóa đơn"));
 
         jLabel2.setText("Mã hóa đơn");
 
         findButton.setText("Tìm kiếm");
-
-        jLabel3.setText("Ngày hóa đơn");
-
-        billDateTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yy"))));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -645,11 +628,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(billIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(billDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -659,8 +638,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(findButton)
-                    .addComponent(billDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
                     .addComponent(billIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)))
         );
@@ -672,10 +649,10 @@ public class Main extends javax.swing.JFrame {
             .addGroup(billPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
                     .addGroup(billPanelLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 389, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         billPanelLayout.setVerticalGroup(
@@ -1315,16 +1292,42 @@ public class Main extends javax.swing.JFrame {
 
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
         // TODO add your handling code here:
+        Ban table = (Ban) checkoutTableIdComboBox.getSelectedItem();
 
-        int tableId = checkoutTableIdComboBox.getSelectedIndex();
-
-        if (tableId == 0) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để thanh toán", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (table == null) {
+            JOptionPane.showMessageDialog(this, "Chưa có bàn nào để thanh toán");
         }
 
-        JOptionPane.showMessageDialog(null, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        totalFreeLabel.setText("100 000 VND");
+        int result = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn thanh toán bàn " + table.getSoBan(), "Thanh toán", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            GiamGia discount = (GiamGia) discountComboBox.getSelectedItem();
+            List<DatBan> datBans = orderedTableRepo.getByTableId(table.getBanId());
+
+            int total = 0;
+            for (DatBan datBan : datBans) {
+                total += datBan.getSanPham().getDonGia().intValue() * datBan.getSoLuong();
+            }
+
+            receiptRepository.create(new HoaDon(new BigDecimal(total), discount.getPhanTram(), table, loggedUser));
+
+            table.setConTrong(true);
+            table.setUpdateDate(new java.util.Date());
+            tableRepo.update(table);
+
+            totalLabel.setText("Thành tiền bàn " + table.getSoBan() + ": ");
+
+            NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("Vietnamese", "Vietnam"));
+
+            totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram()) + " VND giảm (" + discount.getPhanTram() + "%)");
+
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            initTableOrderTab();
+            initReceiptTab();
+
+        }
+
 
     }//GEN-LAST:event_checkoutButtonActionPerformed
 
@@ -1797,10 +1800,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton addOrUpdateDrink;
     private javax.swing.JButton addOrUpdateFood;
     private javax.swing.JButton addProductButton;
-    private javax.swing.JFormattedTextField billDateTextField;
     private javax.swing.JTextField billIdTextField;
     private javax.swing.JPanel billPanel;
-    private javax.swing.JTable billTable;
     private javax.swing.JList<LoaiSanPham> categoryList;
     private javax.swing.JButton checkoutButton;
     private javax.swing.JComboBox<Ban> checkoutTableIdComboBox;
@@ -1841,7 +1842,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel homePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1861,7 +1861,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1887,19 +1886,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JRadioButton monthRadio;
     private javax.swing.JTextField numberOfTableTextField;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JComboBox<Ban> orderTableIdComboBox;
     private javax.swing.JTable productTable;
+    private javax.swing.JTable receiptTable;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel statisticPanel;
     private javax.swing.JTable statisticTable;
     private javax.swing.JTable tableDetailTable;
     private javax.swing.JTextField tableStartIdTextField;
-    private javax.swing.JTable tablesOverviewTable;
     private javax.swing.JLabel totalFreeLabel;
+    private javax.swing.JLabel totalLabel;
     private javax.swing.JLabel totalValueLabel;
     private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateTableNumberButton;
@@ -1993,6 +1992,10 @@ public class Main extends javax.swing.JFrame {
         DiscountComboBoxModel discountComboBoxModel = new DiscountComboBoxModel(discounts);
         discountComboBox.setModel(discountComboBoxModel);
 
+    }
+
+    private void initReceiptTab() {
+        receiptTable.setModel(new ReceiptTableModel());
     }
 
 }
