@@ -31,10 +31,10 @@ public class Program {
     private static final TableRepository tableRepo = new TableRepository();
 
     public static void main(String[] args) throws InterruptedException {
-//        new Login().setVisible(true);
-
+        
         employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(93, 1, 9), new java.util.Date(), "admin", "123456"));
         employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(93, 1, 9), new java.util.Date(), "hoangnam", "123456"));
+//        new Login().setVisible(true);
 
         new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 //        HibernateUtil.getSessionFactory().close();
