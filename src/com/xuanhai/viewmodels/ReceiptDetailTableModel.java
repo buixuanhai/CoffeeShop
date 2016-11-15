@@ -5,7 +5,9 @@
  */
 package com.xuanhai.viewmodels;
 
+import com.xuanhai.models.ChiTietHoaDon;
 import com.xuanhai.models.HoaDon;
+import com.xuanhai.repositories.ReceiptDetailRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
@@ -16,21 +18,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ReceiptDetailTableModel extends AbstractTableModel {
 
-    private ReceiptRepository repo;
-    private List<HoaDon> data;
+    private List<ChiTietHoaDon> data;
     private List<Object[]> model;
-    private String[] columnNames = {"Id", "Ngày hóa đơn", "Giảm giá",
-        "Tổng trị giá", "Bàn", "Người lập"};
+    private String[] columnNames = {"Id", "Sản phẩm", "Số lượng", "Đơn giá"};
 
-    public ReceiptDetailTableModel() {
-        repo = new ReceiptRepository();
-        this.data = repo.get();
-        model = data.stream().map(e -> new Object[]{e.getHoaDonId(), e.getNgayHoaDon(), e.getGiamGia(), e.getTongTriGia(), e.getBan().getBanId(), e.getNhanVien()}).collect(Collectors.toList());
-    }
-
-    public ReceiptDetailTableModel(List<HoaDon> data) {
+    public ReceiptDetailTableModel(List<ChiTietHoaDon> data) {
         this.data = data;
-        model = data.stream().map(e -> new Object[]{e.getHoaDonId(), e.getNgayHoaDon(), e.getGiamGia(), e.getTongTriGia(), e.getBan().getBanId(), e.getNhanVien()}).collect(Collectors.toList());
+        model = data.stream().map(e -> new Object[]{e.getChiTietHoaDonId(), e.getSanPham().getTenSanPham(), e.getSoLuong(), e.getSanPham().getDonGia()}).collect(Collectors.toList());
 
     }
 
@@ -41,7 +35,7 @@ public class ReceiptDetailTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 4;
     }
 
     @Override

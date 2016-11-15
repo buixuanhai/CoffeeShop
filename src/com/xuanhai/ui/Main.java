@@ -31,6 +31,7 @@ import com.xuanhai.viewmodels.FoodComboBoxModel;
 import com.xuanhai.viewmodels.OrderedTableTableModel;
 import com.xuanhai.viewmodels.OrderedTablesComboBoxModel;
 import com.xuanhai.viewmodels.ProductTableModel;
+import com.xuanhai.viewmodels.ReceiptDetailTableModel;
 import com.xuanhai.viewmodels.ReceiptTableModel;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -667,17 +668,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Chi tiết hóa đơn");
 
-        receiptDetailTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jScrollPane8.setViewportView(receiptDetailTable);
 
         javax.swing.GroupLayout billPanelLayout = new javax.swing.GroupLayout(billPanel);
@@ -1841,9 +1831,7 @@ public class Main extends javax.swing.JFrame {
         int id = (int) receiptTable.getValueAt(row, 0);
 
         List<ChiTietHoaDon> chiTietHoaDons = receiptDetailRepository.getByReceiptId(id);
-        for (ChiTietHoaDon chiTietHoaDon : chiTietHoaDons) {
-            System.out.println(chiTietHoaDon.getChiTietHoaDonId());
-        }
+        receiptDetailTable.setModel(new ReceiptDetailTableModel(chiTietHoaDons));
 
     }//GEN-LAST:event_viewReceiptDetailButtonActionPerformed
 
