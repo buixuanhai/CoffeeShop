@@ -6,6 +6,7 @@
 package com.xuanhai.ui;
 
 import com.xuanhai.models.Ban;
+import com.xuanhai.models.ChiTietHoaDon;
 import com.xuanhai.models.DatBan;
 import com.xuanhai.models.GiamGia;
 import com.xuanhai.models.HoaDon;
@@ -17,6 +18,7 @@ import com.xuanhai.repositories.DiscountRepository;
 import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
+import com.xuanhai.repositories.ReceiptDetailRepository;
 import com.xuanhai.repositories.ReceiptRepository;
 import com.xuanhai.repositories.TableRepository;
 import com.xuanhai.util.Utilities;
@@ -68,6 +70,8 @@ public class Main extends javax.swing.JFrame {
     private final OrderedTableRepository orderedTableRepo = new OrderedTableRepository();
 
     private final ReceiptRepository receiptRepository = new ReceiptRepository();
+
+    private final ReceiptDetailRepository receiptDetailRepository = new ReceiptDetailRepository();
 
     private int editingEmployeeId = 0;
 
@@ -1830,7 +1834,12 @@ public class Main extends javax.swing.JFrame {
         }
 
         int id = (int) receiptTable.getValueAt(row, 0);
-        JOptionPane.showMessageDialog(this, id);
+
+        List<ChiTietHoaDon> chiTietHoaDons = receiptDetailRepository.getByReceiptId(id);
+        for (ChiTietHoaDon chiTietHoaDon : chiTietHoaDons) {
+            System.out.println(chiTietHoaDon.getChiTietHoaDonId());
+        }
+
     }//GEN-LAST:event_viewReceiptDetailButtonActionPerformed
 
     /**
