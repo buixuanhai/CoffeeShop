@@ -58,6 +58,7 @@ Contributor(s):
         <mapping class="com.xuanhai.models.GiamGia"/>
         <mapping class="com.xuanhai.models.DatBan"/>
         <mapping class="com.xuanhai.models.HoaDon"/>
+        <mapping class="com.xuanhai.models.ChiTietHoaDon"/>
 
         <!--<mapping resource="com/xuanhai/models/LoaiSanPham.hbm.xml"/>-->
         <!--<mapping resource="com/xuanhai/models/SanPham.hbm.xml"/>-->

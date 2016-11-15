@@ -1349,22 +1349,27 @@ public class Main extends javax.swing.JFrame {
         if (result == JOptionPane.OK_OPTION) {
             GiamGia discount = (GiamGia) discountComboBox.getSelectedItem();
             List<DatBan> datBans = orderedTableRepo.getByTableId(table.getBanId());
-
+            List<ChiTietHoaDon> chiTietHoaDons = new ArrayList<ChiTietHoaDon>();
             int total = 0;
+
             for (DatBan datBan : datBans) {
                 total += datBan.getSanPham().getDonGia().intValue() * datBan.getSoLuong();
             }
 
-            receiptRepository.create(new HoaDon(new BigDecimal(total), discount.getPhanTram(), table, loggedUser));
+            int receiptId = receiptRepository.create(new HoaDon(new BigDecimal(total), discount.getPhanTram(), table, loggedUser));
+
+            HoaDon hoaDon = receiptRepository.get(receiptId);
+            for (DatBan datBan : datBans) {
+                ChiTietHoaDon receiptDetail = new ChiTietHoaDon(hoaDon, datBan.getSanPham(), datBan.getSoLuong());
+                receiptDetailRepository.create(receiptDetail);
+            }
 
             table.setConTrong(true);
             table.setUpdateDate(new java.util.Date());
             tableRepo.update(table);
 
             totalLabel.setText("Thành tiền bàn " + table.getSoBan() + ": ");
-
             NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("Vietnamese", "Vietnam"));
-
             totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram()) + " VND giảm (" + discount.getPhanTram() + "%)");
 
             initTableOrderTab();

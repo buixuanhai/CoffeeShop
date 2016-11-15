@@ -6,6 +6,7 @@
 package com.xuanhai.repositories;
 
 import com.xuanhai.models.ChiTietHoaDon;
+import com.xuanhai.models.HoaDon;
 import com.xuanhai.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -31,10 +32,13 @@ public class ReceiptDetailRepository implements IRepository<ChiTietHoaDon> {
     }
 
     public List<ChiTietHoaDon> getByReceiptId(int id) {
+        ReceiptRepository receiptRepository = new ReceiptRepository();
+        HoaDon hoaDon = receiptRepository.get(id);
+
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
 
-        List<ChiTietHoaDon> receiptDetails = s.createCriteria(ChiTietHoaDon.class).add(Restrictions.eq("hoaDonId", id)).list();
+        List<ChiTietHoaDon> receiptDetails = s.createCriteria(ChiTietHoaDon.class).add(Restrictions.eq("hoaDon", hoaDon)).list();
 
         s.getTransaction().commit();
 

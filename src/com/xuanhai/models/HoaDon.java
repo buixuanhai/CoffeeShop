@@ -3,6 +3,9 @@ package com.xuanhai.models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -27,6 +31,7 @@ public class HoaDon implements java.io.Serializable {
     private int giamGia;
     private Ban ban;
     private NhanVien nhanVien;
+    private Set<ChiTietHoaDon> chiTietHoaDons = new HashSet<>();
 
     public HoaDon() {
     }
@@ -96,6 +101,15 @@ public class HoaDon implements java.io.Serializable {
 
     public void setBan(Ban ban) {
         this.ban = ban;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "hoaDon")
+    public Set<ChiTietHoaDon> getChiTietHoaDons() {
+        return chiTietHoaDons;
+    }
+
+    public void setChiTietHoaDons(Set<ChiTietHoaDon> chiTietHoaDons) {
+        this.chiTietHoaDons = chiTietHoaDons;
     }
 
 }
