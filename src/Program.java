@@ -1,20 +1,12 @@
 
-import com.xuanhai.models.Ban;
-import com.xuanhai.models.DatBan;
-import com.xuanhai.models.HoaDon;
 import com.xuanhai.models.LoaiSanPham;
 import com.xuanhai.models.NhanVien;
 import com.xuanhai.models.SanPham;
 import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.EmployeeRepository;
-import com.xuanhai.repositories.OrderedTableRepository;
 import com.xuanhai.repositories.ProductRepository;
-import com.xuanhai.repositories.ReceiptRepository;
 import com.xuanhai.repositories.TableRepository;
-import com.xuanhai.ui.Login;
 import com.xuanhai.ui.Main;
-import java.math.BigDecimal;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -115,6 +115,8 @@ public class Main extends javax.swing.JFrame {
         initEmployeeTab();
         initTableOrderTab();
         initReceiptTab(null);
+        initReceiptsByMonthTable();
+
     }
 
     private void seed() {
@@ -281,11 +283,12 @@ public class Main extends javax.swing.JFrame {
         receiptDetailTable = new javax.swing.JTable();
         statisticPanel = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        dateRadio = new javax.swing.JRadioButton();
-        weekRadio = new javax.swing.JRadioButton();
-        monthRadio = new javax.swing.JRadioButton();
+        jLabel11 = new javax.swing.JLabel();
+        revenueByMonth = new javax.swing.JComboBox<>();
+        jLabel35 = new javax.swing.JLabel();
+        receiptByMonthTotalLabel = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        statisticTable = new javax.swing.JTable();
+        receiptsByMonthTable = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         totalValueLabel = new javax.swing.JLabel();
         employeePanel = new javax.swing.JPanel();
@@ -705,11 +708,18 @@ public class Main extends javax.swing.JFrame {
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Theo thời gian"));
 
-        dateRadio.setText("Ngày");
+        jLabel11.setText("Danh sách hóa đơn tháng");
 
-        weekRadio.setText("Tuần");
+        revenueByMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        revenueByMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                revenueByMonthActionPerformed(evt);
+            }
+        });
 
-        monthRadio.setText("Tháng");
+        jLabel35.setText("Tổng trị giá");
+
+        receiptByMonthTotalLabel.setText("VND");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -717,25 +727,28 @@ public class Main extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(dateRadio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(weekRadio)
-                .addGap(116, 116, 116)
-                .addComponent(monthRadio)
-                .addGap(20, 20, 20))
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(revenueByMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(receiptByMonthTotalLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dateRadio)
-                    .addComponent(weekRadio)
-                    .addComponent(monthRadio))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addComponent(revenueByMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel35)
+                    .addComponent(receiptByMonthTotalLabel))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        statisticTable.setModel(new javax.swing.table.DefaultTableModel(
+        receiptsByMonthTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -746,7 +759,7 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(statisticTable);
+        jScrollPane5.setViewportView(receiptsByMonthTable);
 
         jLabel18.setText("Tổng giá trị");
 
@@ -757,13 +770,13 @@ public class Main extends javax.swing.JFrame {
             .addGroup(statisticPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5)
                     .addGroup(statisticPanelLayout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(totalValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(500, Short.MAX_VALUE))
+                .addContainerGap(371, Short.MAX_VALUE))
         );
         statisticPanelLayout.setVerticalGroup(
             statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -776,7 +789,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(totalValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Thống kê", statisticPanel);
@@ -1360,7 +1373,7 @@ public class Main extends javax.swing.JFrame {
 
             totalLabel.setText("Thành tiền bàn " + table.getSoBan() + ": ");
             NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("Vietnamese", "Vietnam"));
-            totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram()) + " VND giảm (" + discount.getPhanTram() + "%)");
+            totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram() * 0.01) + " VND giảm (" + discount.getPhanTram() + "%)");
 
             initTableOrderTab();
             initReceiptTab(null);
@@ -1835,6 +1848,30 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_viewReceiptDetailButtonActionPerformed
 
+    private void revenueByMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revenueByMonthActionPerformed
+        // TODO add your handling code here:
+
+        int month = Integer.parseInt(revenueByMonth.getSelectedItem().toString());
+
+        List<HoaDon> receipts = receiptRepository.get();
+
+        List<HoaDon> filteredReceipts = new ArrayList<HoaDon>();
+
+        for (HoaDon receipt : receipts) {
+            if (receipt.getNgayHoaDon().getMonth() + 1 == month && receipt.getNgayHoaDon().getYear() == new java.util.Date().getYear()) {
+                filteredReceipts.add(receipt);
+            }
+        }
+
+        double total = 0;
+        for (HoaDon hoaDon : filteredReceipts) {
+            total += hoaDon.getTongTriGia().doubleValue();
+        }
+
+        receiptByMonthTotalLabel.setText(Double.toString(total) + " VND");
+        receiptsByMonthTable.setModel(new ReceiptTableModel(filteredReceipts));
+    }//GEN-LAST:event_revenueByMonthActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1891,7 +1928,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField currentTableIdEndTextField;
     private javax.swing.JTextField currentTableIdStartTextField;
     private javax.swing.JTextField currentTableNumberTextField;
-    private javax.swing.JRadioButton dateRadio;
     private javax.swing.JButton deleteCategoryButton;
     private javax.swing.JButton deleteDiscountButton;
     private javax.swing.JButton deleteEmployeeButton;
@@ -1919,6 +1955,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel homePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1944,6 +1981,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1965,18 +2003,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JRadioButton monthRadio;
     private javax.swing.JTextField numberOfTableTextField;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JComboBox<Ban> orderTableIdComboBox;
     private javax.swing.JTable productTable;
+    private javax.swing.JLabel receiptByMonthTotalLabel;
     private javax.swing.JTable receiptDetailTable;
     private javax.swing.JButton receiptFindButton;
     private javax.swing.JTable receiptTable;
+    private javax.swing.JTable receiptsByMonthTable;
     private javax.swing.JTextField receptIdSearchTextField;
+    private javax.swing.JComboBox<String> revenueByMonth;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel statisticPanel;
-    private javax.swing.JTable statisticTable;
     private javax.swing.JTable tableDetailTable;
     private javax.swing.JTextField tableStartIdTextField;
     private javax.swing.JLabel totalFreeLabel;
@@ -1985,7 +2024,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateTableNumberButton;
     private javax.swing.JButton viewReceiptDetailButton;
-    private javax.swing.JRadioButton weekRadio;
     // End of variables declaration//GEN-END:variables
 
     private void initTableOrderTab() {
@@ -2086,6 +2124,10 @@ public class Main extends javax.swing.JFrame {
             receiptTable.setModel(new ReceiptTableModel(receipts));
 
         }
+    }
+
+    private void initReceiptsByMonthTable() {
+//        receiptsByMonthTable.setModel(new ReceiptTableModel());
     }
 
 }

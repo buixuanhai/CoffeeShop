@@ -46,6 +46,7 @@ public class ReceiptRepository implements IRepository<HoaDon> {
             return receipts.get(0);
         }
     }
+    
 
     @Override
     public int create(HoaDon object) {
