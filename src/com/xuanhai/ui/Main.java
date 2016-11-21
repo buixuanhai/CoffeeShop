@@ -46,6 +46,7 @@ import javax.swing.ListSelectionModel;
 import com.xuanhai.viewmodels.TablesComboBoxModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.stream.Collectors;
 import javax.swing.JTable;
@@ -268,9 +269,10 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         checkoutButton = new javax.swing.JButton();
         checkoutTableIdComboBox = new javax.swing.JComboBox<>();
+        totalFeeFinalLabel = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
         totalLabel = new javax.swing.JLabel();
-        totalFreeLabel = new javax.swing.JLabel();
-        printReceiptButton = new javax.swing.JButton();
+        totalFeeLabel = new javax.swing.JLabel();
         billPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         receiptTable = new javax.swing.JTable();
@@ -553,13 +555,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        totalLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        totalFeeFinalLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        totalFeeFinalLabel.setForeground(new java.awt.Color(255, 0, 51));
+
+        jLabel36.setText("Số tiền phải thanh toán");
+
         totalLabel.setText("Thành tiền");
 
-        totalFreeLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        totalFreeLabel.setForeground(new java.awt.Color(255, 0, 51));
-
-        printReceiptButton.setText("In hóa đơn");
+        totalFeeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        totalFeeLabel.setForeground(new java.awt.Color(255, 0, 51));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -568,25 +572,27 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(40, 40, 40)
-                        .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(totalLabel)
-                        .addGap(28, 28, 28)
-                        .addComponent(totalFreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(checkoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                            .addComponent(printReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel36)
+                    .addComponent(totalLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalFeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalFeeFinalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel9)
+                .addGap(40, 40, 40)
+                .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -597,15 +603,17 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(checkoutTableIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(discountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(printReceiptButton)
-                .addGap(5, 5, 5)
+                .addGap(34, 34, 34)
                 .addComponent(checkoutButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(totalFeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(totalLabel)
-                    .addComponent(totalFreeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                    .addComponent(jLabel36)
+                    .addComponent(totalFeeFinalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
@@ -625,7 +633,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(orderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1380,8 +1388,10 @@ public class Main extends javax.swing.JFrame {
             tableRepo.update(table);
 
             totalLabel.setText("Thành tiền bàn " + table.getSoBan() + ": ");
+
             NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("Vietnamese", "Vietnam"));
-            totalFreeLabel.setText(formatter.format(total - total * discount.getPhanTram() * 0.01) + " VND giảm (" + discount.getPhanTram() + "%)");
+            totalFeeLabel.setText(formatter.format(total) + " VND");
+            totalFeeFinalLabel.setText(formatter.format(total - total * discount.getPhanTram() * 0.01) + " VND giảm (" + discount.getPhanTram() + "%)");
 
             initTableOrderTab();
             initReceiptTab(null);
@@ -1990,6 +2000,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2014,7 +2025,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField numberOfTableTextField;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JComboBox<Ban> orderTableIdComboBox;
-    private javax.swing.JButton printReceiptButton;
     private javax.swing.JTable productTable;
     private javax.swing.JLabel receiptByMonthTotalLabel;
     private javax.swing.JTable receiptDetailTable;
@@ -2027,7 +2037,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel statisticPanel;
     private javax.swing.JTable tableDetailTable;
     private javax.swing.JTextField tableStartIdTextField;
-    private javax.swing.JLabel totalFreeLabel;
+    private javax.swing.JLabel totalFeeFinalLabel;
+    private javax.swing.JLabel totalFeeLabel;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JLabel totalValueLabel;
     private javax.swing.JButton updateEmployeeButton;
