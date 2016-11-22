@@ -6,7 +6,7 @@ import com.xuanhai.repositories.CategoryRepository;
 import com.xuanhai.repositories.EmployeeRepository;
 import com.xuanhai.repositories.ProductRepository;
 import com.xuanhai.repositories.TableRepository;
-import com.xuanhai.ui.Main;
+import com.xuanhai.ui.Login;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,9 +26,9 @@ public class Program {
         
         employeeRepo.create(new NhanVien("Bùi Xuân Hải", new java.util.Date(93, 1, 9), new java.util.Date(), "admin", "123456"));
         employeeRepo.create(new NhanVien("Nguyễn Hoàng Nam", new java.util.Date(93, 1, 9), new java.util.Date(), "hoangnam", "123456"));
-//        new Login().setVisible(true);
+        new Login().setVisible(true);
 
-        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
+//        new Main(new EmployeeRepository().getByUsername("admin")).setVisible(true);
 //        HibernateUtil.getSessionFactory().close();
     }
 
